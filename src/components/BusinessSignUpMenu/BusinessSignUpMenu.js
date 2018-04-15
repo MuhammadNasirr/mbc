@@ -28,7 +28,6 @@ export default class BusinessSignUpMenu extends React.Component {
         }
         axios.get(`${base_url}${sectorsList}`)
             .then((res) => {
-                console.log(res.data.data)
                 this.setState({
                     sectors: res.data.data
                 })
@@ -40,11 +39,10 @@ export default class BusinessSignUpMenu extends React.Component {
     render() {
         const props = this.props
         return (
-            <View style={{alignItems: 'center'}}>
+            <View style={{ alignItems: 'center' }}>
                 <Picker
                     mode="dropdown"
                     iosIcon={<Icon name="ios-arrow-down-outline" />}
-                    // value={props.selected}
                     selectedValue={props.selected}
                     onValueChange={(text) => props.SelectUserType(text)}
                     style={{ color: '#fff', width: 200, marginLeft: 15 }}>
@@ -60,7 +58,7 @@ export default class BusinessSignUpMenu extends React.Component {
                     placeholder="Company name"
                     containerStyle={signupStyles.inputStyle}
                     placeholderTextColor="#D3D3D3"
-                    inputStyle={{marginLeft:'3%', color: 'rgb(0,150,136)' }}
+                    inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)' }}
                 />
                 <FormInput
                     onChangeText={(text) => props.onCompanyAddressChange(text)}
@@ -69,7 +67,7 @@ export default class BusinessSignUpMenu extends React.Component {
                     placeholder="Company Address"
                     containerStyle={signupStyles.inputStyle}
                     placeholderTextColor="#D3D3D3"
-                    inputStyle={{marginLeft:'3%', color: 'rgb(0,150,136)' }}
+                    inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)' }}
                 />
                 <FormInput
                     onChangeText={(text) => props.setCompanyAddressLine1(text)}
@@ -78,7 +76,7 @@ export default class BusinessSignUpMenu extends React.Component {
                     placeholderTextColor="#D3D3D3"
                     placeholder="line Address"
                     containerStyle={signupStyles.inputStyle}
-                    inputStyle={{marginLeft:'3%', color: 'rgb(0,150,136)' }}
+                    inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)' }}
                 />
                 <FormInput
                     onChangeText={(text) => props.WriteCity(text)}
@@ -87,7 +85,7 @@ export default class BusinessSignUpMenu extends React.Component {
                     placeholderTextColor="#D3D3D3"
                     placeholder="city"
                     containerStyle={signupStyles.inputStyle}
-                    inputStyle={{marginLeft:'3%', color: 'rgb(0,150,136)' }}
+                    inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)' }}
                 />
                 <FormInput
                     onChangeText={txt => props.setZipPostalCode(txt)}
@@ -96,7 +94,7 @@ export default class BusinessSignUpMenu extends React.Component {
                     placeholderTextColor="#D3D3D3"
                     placeholder="Zip/Postal Code"
                     containerStyle={signupStyles.inputStyle}
-                    inputStyle={{marginLeft:'3%', color: 'rgb(0,150,136)' }}
+                    inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)' }}
                 />
                 <Picker
                     mode="dropdown"
@@ -124,14 +122,9 @@ export default class BusinessSignUpMenu extends React.Component {
                     style={{ color: '#fff', width: 200, marginLeft: 15 }}>
                     {this.state.sectors && this.state.sectors.map((d, i) => {
                         return (
-                            <Item label={d.attributes.name} value={d.id} color='rgb(0,150,136)' />
+                            <Item key={i} label={d.attributes.name} value={d.id} color='rgb(0,150,136)' />
                         )
                     })}
-                    {/* <Item label="Select Sectors" value="key0" color='green' />
-                    <Item label="Automotive" value="Automotive" />
-                    <Item label="Textile" value="Textile" />
-                    <Item label="Resturants" value="Resturants" />
-                    <Item label="Information Technology" value="Information Technology" /> */}
                 </Picker>
 
             </View>
@@ -139,8 +132,6 @@ export default class BusinessSignUpMenu extends React.Component {
     }
 
 }
-
-
 
 const style = StyleSheet.create({
     bgImage: {

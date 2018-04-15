@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal, ImageBackground } from 'react-native';
 import {
     Button,
     Header,
@@ -53,21 +53,24 @@ class Profile extends React.Component {
         const { navigate } = this.props.navigation;
         const profileInfo = this.props.navigation.state.params.profileData.attributes
         return (
-            <ScrollView style={{ backgroundColor: 'white' }}>
-                <KeyboardAwareScrollView>
-                    <View style={styles.view1}>
-                        <Image source={require('../../../images/icon3.png')} style={styles.logo} />
-                    </View>
-                    <View style={styles.view1}>
-                        <View style={styles.view2}>
-                            <Text style={styles.businessname}>{profileInfo.firstName + profileInfo.lastName}</Text>
-                            {this.state.role && this.state.role === "CUSTOMER" ? null : <Text style={styles.businesstype}>Vortechs Innovations</Text>}
+            <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
 
-                            <Text style={styles.businesstype}>{profileInfo && profileInfo.email}</Text>
+                <ScrollView>
+                    <KeyboardAwareScrollView>
+                        <View style={styles.view1}>
+                            <Image source={require('../../../images/icon3.png')} style={styles.logo} />
                         </View>
-                    </View>
-                </KeyboardAwareScrollView>
-            </ScrollView>
+                        <View style={styles.view1}>
+                            <View style={styles.view2}>
+                                <Text style={styles.businessname}>{profileInfo.firstName + profileInfo.lastName}</Text>
+                                {this.state.role && this.state.role === "CUSTOMER" ? null : <Text style={styles.businesstype}>Vortechs Innovations</Text>}
+
+                                <Text style={styles.businesstype}>{profileInfo && profileInfo.email}</Text>
+                            </View>
+                        </View>
+                    </KeyboardAwareScrollView>
+                </ScrollView>
+            </ImageBackground>
         )
     }
 }
@@ -77,22 +80,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 20
     },
+    loginimage: {
+        flex: 1,
+        justifyContent: 'center',
+        // alignItems: 'center',
+        width: null,
+        height: null,
+        resizeMode: 'stretch',
+    },
     view2: {
         flexDirection: 'column',
         alignItems: 'center',
     },
     businessname: {
         fontSize: 18,
-        color: "#44592F",
+        color: "#fff",
         alignItems: 'center'
     },
     businesstype: {
-        color: "#44592F",
-        opacity: 0.5,
+        color: "#fff",
+        // opacity: 0.5,
         justifyContent: 'center'
     },
     businessrating: {
-        color: "#44592F",
+        color: "#fff",
         fontSize: 20
     },
     logo: {
@@ -105,3 +116,23 @@ const styles = StyleSheet.create({
 })
 
 export default Profile
+
+
+
+
+
+{/* <ScrollView style={{ backgroundColor: 'white' }}>
+<KeyboardAwareScrollView>
+    <View style={styles.view1}>
+        <Image source={require('../../../images/icon3.png')} style={styles.logo} />
+    </View>
+    <View style={styles.view1}>
+        <View style={styles.view2}>
+            <Text style={styles.businessname}>{profileInfo.firstName + profileInfo.lastName}</Text>
+            {this.state.role && this.state.role === "CUSTOMER" ? null : <Text style={styles.businesstype}>Vortechs Innovations</Text>}
+
+            <Text style={styles.businesstype}>{profileInfo && profileInfo.email}</Text>
+        </View>
+    </View>
+</KeyboardAwareScrollView>
+</ScrollView> */}

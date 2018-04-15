@@ -10,9 +10,9 @@ export const GenerateStyles = {
 
     },
     Generatebutton: {
-        backgroundColor: '#44592F',
+        backgroundColor: 'rgb(0,150,136)',
         marginTop: 25,
-        // borderRadius: 5,
+        borderRadius: 5,
         // height: 55,
         width: 250,
     },

@@ -10,7 +10,6 @@ import {
     StyleSheet,
     TextInput,
     ImageBackground
-    // ImageBackground
 } from "react-native";
 import { connect } from 'react-redux'
 import { Header, FormInput, FormLabel, Button, Icon, Input, SocialIcon } from "react-native-elements";
@@ -20,11 +19,8 @@ import Google from 'react-native-vector-icons/FontAwesome';
 import SplashScreen from 'react-native-splash-screen';
 import axios from 'axios';
 import FBSDK from 'react-native-fbsdk';
-const {
-    LoginButton,
-    AccessToken
-} = FBSDK;
-
+import { LoginManager, LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+// import { GoogleSignin, } from 'react-native-google-signin';
 import { userLogin, alreadyLogin } from '../../store/middleware/authMiddleWare';
 import { base_url, Login } from '../../constants/constant';
 const Accounts = [];
@@ -38,19 +34,12 @@ class UserLogin extends Component {
             password: "",
         };
     }
-    // componentDidMount() {
-
-    //     SplashScreen.hide();
-
-    // }
     componentDidMount() {
         SplashScreen.hide();
         AsyncStorage.getItem('token')
             .then((data) => {
-                console.log("-----------", data)
                 if (data !== null) {
                     this.props.alreadyLogin(data)
-                    // this.props.login(obj, navigate)
                 }
             })
             .catch((err) => {
@@ -69,9 +58,29 @@ class UserLogin extends Component {
         }
         this.props.login(obj, navigate)
     }
+
+    _responseInfoCallback = (error, result) => {
+        if (error) {
+            alert('Error fetching data: ' + error.toString());
+        } else {
+            console.log('Result Name: ', result);
+            // alert('Result Name: ' + result.name);
+        }
+    }
+    // _signIn() {
+    //     GoogleSignin.signIn()
+    //         .then((user) => {
+    //             console.log(user);
+    //             // this.setState({ user: user });
+    //         })
+    //         .catch((err) => {
+    //             console.log('WRONG SIGNIN', err);
+    //         })
+    //         .done();
+    // }
     render() {
         const { navigate } = this.props.navigation;
-        console.log("loginn--", this.props.isLogin)
+      
         return (
             <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
                 <KeyboardAwareScrollView contentContainerStyle={{ display: 'flex', alignItems: 'center' }}>
@@ -79,11 +88,6 @@ class UserLogin extends Component {
                         <Image source={require('../../../images/logotrans.png')} style={styles.logo} />
                         <View style={{ marginTop: '10%' }} >
                             <View style={styles.passwordContainer}>
-                                {/* <Icon
-                                    name='person'
-                                    color='#fff'
-                                    size={20}
-                                /> */}
                                 <FormInput
                                     containerStyle={{
                                         width: 250,
@@ -107,11 +111,6 @@ class UserLogin extends Component {
                                 />
                             </View>
                             <View style={styles.passwordContainer}>
-                                {/* <Icon
-                                    name='lock'
-                                    color='#fff'
-                                    size={20}
-                                /> */}
                                 <FormInput
                                     containerStyle={{
                                         width: 250, borderRadius: 5,
@@ -132,8 +131,28 @@ class UserLogin extends Component {
                                 />
                             </View>
                             <View>
+
+                            </View>
+                            <Button
+                                title="Login"
+                                buttonStyle={loginStyles.loginButton}
+                                onPress={() => this._handleLogin()}
+                                textStyle={{ fontFamily: 'Gotham Rounded', fontWeight: 'bold', fontSize: 18 }}
+                            />
+                        </View>
+                        <View>
+                            <View style={loginStyles.registerSuggestionText}>
+                                <TouchableOpacity style={{ marginRight: '15%' }} onPress={() => navigate("ForgotPasswordScreen")}>
+                                    <Text style={{ color: '#fff', fontSize: 12 }}>Forgot password ?</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => navigate("SignupScreen")}>
+                                    <Text style={{ color: '#fff', fontSize: 12, fontFamily: 'Gotham Rounded' }}>Create an account</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={loginStyles.socialIcons}>
                                 <LoginButton
-                                    publishPermissions={["publish_actions"]}
+                                    // publishPermissions={["publish_actions"]}
+                                    readPermissions={["email", "user_friends", "public_profile"]}
                                     onLoginFinished={
                                         (error, result) => {
                                             if (error) {
@@ -143,7 +162,13 @@ class UserLogin extends Component {
                                             } else {
                                                 AccessToken.getCurrentAccessToken().then(
                                                     (data) => {
-                                                        alert(data.accessToken.toString())
+                                                        const infoRequest = new GraphRequest(
+                                                            '/me?fields=name,picture',
+                                                            null,
+                                                            this._responseInfoCallback
+                                                        );
+                                                        // Start the graph request.
+                                                        new GraphRequestManager().addRequest(infoRequest).start();
                                                     }
                                                 )
                                             }
@@ -151,38 +176,13 @@ class UserLogin extends Component {
                                     }
                                     onLogoutFinished={() => alert("logout.")} />
                             </View>
-                        </View>
-                        <Button
-                            title="Login"
-                            buttonStyle={loginStyles.loginButton}
-                            onPress={() => this._handleLogin()}
-                            textStyle={{ fontFamily: 'Gotham Rounded', fontWeight: 'bold', fontSize: 18 }}
-                        />
-                    </View>
-                    <View>
-                        <View style={loginStyles.registerSuggestionText}>
-                            <TouchableOpacity style={{ marginRight: '15%' }} onPress={() => navigate("ForgotPasswordScreen")}>
-                                <Text style={{ color: '#fff', fontSize: 12 }}>Forgot password ?</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => navigate("SignupScreen")}>
-                                <Text style={{ color: '#fff', fontSize: 12, fontFamily: 'Gotham Rounded' }}>Create an account</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={loginStyles.socialIcons}>
-
-                            <TouchableOpacity>
-                                <SocialIcon
-                                    type='facebook'
-                                />
-                            </TouchableOpacity>
-                            <View style={{ borderRightColor: '#5F9EA0', borderRightWidth: 2, height: 30 }}></View>
-                            <TouchableOpacity>
+                            {/* <TouchableOpacity>
                                 <SocialIcon
                                     type='google'
                                     iconColor='#fff'
                                     style={{ backgroundColor: '#2BB673' }}
                                 />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </View>
 
@@ -199,13 +199,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: null,
         height: null,
-        resizeMode: 'stretch',
     },
     passwordContainer: {
         flexDirection: 'row',
-        // marginLeft:'-2%',
-        // borderBottomWidth: 1,
-        // borderColor: '#000'
         paddingBottom: 10,
     },
     inputStyle: {
@@ -232,7 +228,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         login: (payload, navigate) => { dispatch(userLogin(payload, navigate)) },
         alreadyLogin: (data) => { dispatch(alreadyLogin(data)) }
-
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);

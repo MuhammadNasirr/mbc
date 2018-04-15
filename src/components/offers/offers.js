@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal,ImageBackground } from 'react-native';
 import {
     Button,
     Header,
@@ -38,39 +38,48 @@ export default class Find extends React.Component {
         const list = this.props.navigation.state.params.data
         const { navigate } = this.props.navigation;
         return (
-            <ScrollView style={{ backgroundColor: 'white' }}>
-                <KeyboardAwareScrollView>
-                    <List containerStyle={{ marginBottom: 20, marginTop: 0 }}>
-                        {
-                            list && list.map((l, i) => {
-                                return (
-                                    <TouchableOpacity key={i} >
-                                        <ListItem
-                                            roundAvatar
-                                            containerStyle={{ height: 100, borderBottomColor: 'rgb(0,150,136)' }}
-                                            leftIcon={<Gift name="gift" size={30} color="rgb(0,150,136)" />}
-                                            key={i}
-                                            titleNumberOfLines={2}
-                                            title={l.attributes.code}
-                                            titleStyle={{ color: 'rgb(0,150,136)', marginLeft: 20 }}
-                                            subtitle={l.attributes.description}
-                                            subtitleNumberOfLines={3}
-                                            subtitleStyle={{ color: 'rgb(0,150,136)' }}
-                                            hideChevron={true}
-                                            subtitleContainerStyle={{ marginLeft: 20 }}
-                                        />
-                                    </TouchableOpacity>
-                                )
-                            })
-                        }
-                    </List>
-                </KeyboardAwareScrollView>
-            </ScrollView>
+            <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
+
+                <ScrollView>
+                    <KeyboardAwareScrollView>
+                        <List containerStyle={{ backgroundColor: 'transparent', marginBottom: 20, marginTop: 0 }}>
+                            {
+                                list && list.map((l, i) => {
+                                    return (
+                                        <TouchableOpacity key={i} >
+                                            <ListItem
+                                                roundAvatar
+                                                containerStyle={{ height: 100, borderBottomColor: '#fff' }}
+                                                leftIcon={<Gift name="gift" size={30} color="rgb(0,150,136)" />}
+                                                key={i}
+                                                titleNumberOfLines={2}
+                                                title={l.attributes.code}
+                                                titleStyle={{ color: '#fff', marginLeft: 20 }}
+                                                subtitle={l.attributes.description}
+                                                subtitleNumberOfLines={3}
+                                                subtitleStyle={{ color: '#fff' }}
+                                                hideChevron={true}
+                                                subtitleContainerStyle={{ marginLeft: 20 }}
+                                            />
+                                        </TouchableOpacity>
+                                    )
+                                })
+                            }
+                        </List>
+                    </KeyboardAwareScrollView>
+                </ScrollView>
+            </ImageBackground>
         )
     }
 }
 
-const style = StyleSheet.create({
-
+const styles = StyleSheet.create({
+    loginimage: {
+        flex: 1,
+        justifyContent: 'center',
+        // alignItems: 'center',
+        width: null,
+        height: null,
+        resizeMode: 'stretch',
+    },
 })
-

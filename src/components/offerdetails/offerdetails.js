@@ -38,9 +38,6 @@ class offerdetails extends React.Component {
     submit() {
 
     }
-    ratingCompleted(rating) {
-        console.log("Rating is: " + rating)
-    }
     render() {
 
         const { navigate } = this.props.navigation;

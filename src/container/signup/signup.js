@@ -83,19 +83,7 @@ export default class Signup extends React.Component {
     }
 
     signup() {
-        // const { navigate } = this.props.navigation
-        // if (this.state.selected === "") {
-        //     alert("please select user type")
-        // }
-        // else if (this.state.selected === "Business") {
-        //     navigate('linkscreen', { data: this.state.selected })
-
-        // }
-        // else {
-
-        //     navigate('SelectPaymentScreen', { data: this.state.selected })
-        //     // navigate('linkscreen', { data: this.state.selected })
-        // }
+        const { navigate } = this.props.navigation;
         const obj = {
             userType: "CUSTOMER",
             email: this.state.email,
@@ -114,74 +102,43 @@ export default class Signup extends React.Component {
             email: this.state.email,
             password: this.state.password,
         }
-        const object = {
-            attributes: {
-                userType: "BUSINESS",
-                email: this.state.email,
-                password: this.state.password,
-            },
-            relationships: {
-                company: {
-                    attributes: {
-                        name: this.state.companyName
-                    },
-                    relationships: {
-                        sector: {
-                            attributes: {
-                                id: this.state.sectors
-                            }
-                        },
-                        address: {
-                            attributes: {
-                                line: this.state.lineAddress,
-                                city: this.state.city,
-                                postcode: this.state.zipPostalCode,
-                                country: this.state.country
-                            }
-                        },
-                        socialMediaLink: {
-                            attributes: {
-                                twitter: 'https://mubashir/twitter.com',
-                                facebook: 'https://mubashir/facebook.com',
-                                linkedin: 'https://mubashir/likedin.com',
-                                website: 'https://mubashir/developer.com'
-                            }
-                        }
-                    }
-                }
-
-            }
-        }
-
-        console.log(object)
         if (this.state.selected === "") {
             alert("please select user type")
         }
+        else if (this.state.selected === "individual" && this.state.firstName.length < 1) {
+            alert("first name require")
+        }
+        else if (this.state.selected === "individual" && this.state.lastName.length < 1) {
+            alert("last name require")
+        }
+        else if (this.state.email.length < 1) {
+            alert(" email require")
+        }
+        else if (this.state.password.length < 1) {
+            alert("password require")
+        }
+        else if (this.state.selected === "Business" && this.state.companyName.length < 1) {
+            alert("companyName is require")
+        }
+        else if (this.state.selected === "Business" && this.state.companyAddress.length < 1) {
+            alert("companyAddress is  require")
+        }
+
         else if (this.state.selected === "individual") {
             this.state.checked ?
                 axios.post(`${base_url}${CustomerSignup}`, { attributes: obj })
                     .then((res) => {
                         const { navigate } = this.props.navigation;
-                        navigate('linkscreen', { data: this.state.selected })
+                        navigate('SelectPaymentScreen', { data: this.state.selected })
                     })
                     .catch((error) => {
                         ToastAndroid.show(error.response.data.errors[0].message, ToastAndroid.SHORT);
                     }) : ToastAndroid.show("You have to Agree the Privacy policy of MBC", ToastAndroid.SHORT);
-
         }
+
         else {
-            // axios.post(`${base_url}${CustomerSignup}`, object)
-            // .then((res) => {
-            // console.log(res)
-            const { navigate } = this.props.navigation;
             navigate('linkscreen', { data: this.state.selected, alllstate })
-            // })
-            // .catch((error) => {
-            // console.log(error.response)
-            // })
-
         }
-
     }
     setCompanyName(text) {
         this.setState({
@@ -208,7 +165,6 @@ export default class Signup extends React.Component {
             zipPostalCode: value
         })
     }
-
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -263,8 +219,6 @@ export default class Signup extends React.Component {
                                             sectors={this.state.sectors}
                                             SelectUserType={(text) => this.SelectUserType(text)}
                                             SelectCountry={(text) => { this.SelectCountry(text) }}
-
-
                                         /> :
                                         <View>
                                             <FormInput
@@ -274,7 +228,7 @@ export default class Signup extends React.Component {
                                                 underlineColorAndroid='transparent'
                                                 placeholder="First name"
                                                 placeholderTextColor="#D3D3D3"
-                                                inputStyle={{marginLeft:'3%', color: 'rgb(0,150,136)' }}
+                                                inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)' }}
                                             />
                                             <FormInput
                                                 containerStyle={signupStyles.inputStyle}
@@ -283,7 +237,7 @@ export default class Signup extends React.Component {
                                                 underlineColorAndroid='transparent'
                                                 placeholder="Last name"
                                                 placeholderTextColor="#D3D3D3"
-                                                inputStyle={{marginLeft:'3%', color: 'rgb(0,150,136)' }}
+                                                inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)' }}
                                             />
                                         </View>
                                     }
@@ -296,7 +250,7 @@ export default class Signup extends React.Component {
                                             underlineColorAndroid='transparent'
                                             placeholder="Email address"
                                             placeholderTextColor="#D3D3D3"
-                                            inputStyle={{marginLeft:'3%', color: 'rgb(0,150,136)' }}
+                                            inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)' }}
                                         />
                                         <FormInput
                                             secureTextEntry={true}
@@ -306,11 +260,9 @@ export default class Signup extends React.Component {
                                             onChangeText={txt => this.setState({ password: txt })}
                                             containerStyle={signupStyles.inputStyle}
                                             placeholderTextColor="#D3D3D3"
-                                            inputStyle={{marginLeft:'3%', color: 'rgb(0,150,136)', fontFamily: 'Gotham Rounded', }}
+                                            inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)', fontFamily: 'Gotham Rounded', }}
                                         />
                                     </View>
-
-
                                 </View>
                                 <Button
                                     title="Next"
@@ -337,7 +289,7 @@ export default class Signup extends React.Component {
                                         </TouchableOpacity>
                                     </View>
                                     <TouchableOpacity onPress={() => navigate("LoginScreen")}>
-                                        <Text style={{ color: '#fff', fontFamily: 'Gotham Rounded', fontWeight: "bold" }}>ALREADY REGISTERED? LOGIN</Text>
+                                        <Text style={{ color: '#fff', fontFamily: 'Gotham Rounded', fontWeight: "bold" }}>ALREADY REGISTERED? <Text style={{ textDecoration: 'underline', textDecorationColor: 'rgb(0,150,136)', color: 'rgb(0,150,136)' }}>LOGIN</Text></Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -345,7 +297,6 @@ export default class Signup extends React.Component {
                     </KeyboardAwareScrollView>
                 </ScrollView>
             </ImageBackground>
-
         )
     }
 }

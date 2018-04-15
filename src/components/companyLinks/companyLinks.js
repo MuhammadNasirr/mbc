@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal, ToastAndroid,ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal, ToastAndroid, ImageBackground } from 'react-native';
 import {
     Button,
     Header,
@@ -8,7 +8,7 @@ import {
     Icon,
     Avatar,
     CheckBox,
-    
+
 } from "react-native-elements";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
@@ -21,10 +21,10 @@ export default class CompanyLinks extends React.Component {
         super(props);
         this.state = {
             socialMedia: [],
-            facebookUrl: '',
-            LinkedinUrl: '',
-            TwitterUrl: '',
-            WebsiteUrl: ''
+            facebookUrl: 'https://',
+            LinkedinUrl: 'https://',
+            TwitterUrl: 'https://',
+            WebsiteUrl: 'https://'
         }
     }
     static navigationOptions = {
@@ -41,7 +41,6 @@ export default class CompanyLinks extends React.Component {
     submit() {
         const { navigate } = this.props.navigation;
         const object = this.props.navigation.state.params.alllstate
-        // console.log(mobject)
         const data = {
             attributes: {
                 userType: "BUSINESS",
@@ -79,11 +78,8 @@ export default class CompanyLinks extends React.Component {
                 }
             }
         }
-        console.log(data)
-
         axios.post(`${base_url}${CustomerSignup}`, data)
             .then((res) => {
-                console.log(res)
                 navigate('SelectPaymentScreen', { data: this.props.navigation.state.params.data })
             })
             .catch((error) => {
@@ -106,7 +102,7 @@ export default class CompanyLinks extends React.Component {
                                 <View>
                                     <FormInput
                                         containerStyle={style.inputStyle}
-                                        // value={this.state.email}
+                                        value={this.state.facebookUrl}
                                         onChangeText={txt => this.setState({ facebookUrl: txt })}
                                         underlineColorAndroid='transparent'
                                         placeholder="Facebook URL"
@@ -191,7 +187,7 @@ const style = StyleSheet.create({
         width: 120,
         height: 120,
         marginTop: '5%',
-        marginBottom:'2%'
+        marginBottom: '2%'
         // marginLeft: 'auto',
         // marginRight: 'auto'
     },
@@ -207,12 +203,10 @@ const style = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop: '3%',
         fontFamily: 'Gotham Rounded',
-        color:'rgb(0,150,136)'
+        color: 'rgb(0,150,136)'
     },
     privacy: {
         fontSize: 10,
-        //    marginLeft:-10,
-        // width:200
     }
 })
 

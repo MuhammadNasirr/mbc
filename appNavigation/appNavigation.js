@@ -39,7 +39,6 @@ const loginMenu = StackNavigator({
     PrivacyPolicyScreen: { screen: PrivacyPolicy },
     FindBusineesScreen: { screen: FindBusinees },
     CompanyDetailsScreen: { screen: CompanyDetails },
-    SelectPaymentScreen: { screen: SelectPayment },
     BusinessCategoryScreen: { screen: BusinessCategory },
     OffersScreen: { screen: Offers },
     EventsScreen: { screen: Events },
@@ -54,6 +53,7 @@ const LogoutMenu = StackNavigator({
     SignupScreen: { screen: Signup },
     ForgotPasswordScreen: { screen: ForgotPassword },
     linkscreen: { screen: CompanyLinks },
+    SelectPaymentScreen: { screen: SelectPayment },
 })
 
 const InitialRoutes = (islogin) => {

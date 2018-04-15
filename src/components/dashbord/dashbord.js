@@ -19,7 +19,6 @@ class Dashbord extends Component {
 
   }
   componentDidMount() {
-    console.log("didmountrun")
     // const { navigate } = this.props.navigation;
     this.props.navigation.setParams({ handleLogout: this._logout }),
       (error) => {
@@ -32,32 +31,13 @@ class Dashbord extends Component {
   }
   static navigationOptions = {
     header: null
-    // const { params = {} } = navigation.state;
-    // return {
-    //   title: 'Home',
-    //   headerStyle: { backgroundColor: 'rgb(0,150,136)' },
-    //   headerTitleStyle: { color: '#fff' },
-    //   headerLeft: <Icon name='home' style={{ marginLeft: 10, color: '#fff' }} />,
-    //   headerRight: (<Icon name='log-out' onPress={} style={{ marginRight: 10, color: '#fff' }} />) // custom component
-    // }
+
   }
-  // static navigationOptions = ({ navigation }) => {
-  //   const { params = {} } = navigation.state;
-  //   return {
-  //     title: 'Home',
-  //     headerStyle: { backgroundColor: 'rgb(0,150,136)' },
-  //     headerTitleStyle: { color: '#fff' },
-  //     headerLeft: <Icon name='home' style={{ marginLeft: 10, color: '#fff' }} />,
-  //     headerRight: (<Icon name='log-out' onPress={params.handleLogout} style={{ marginRight: 10, color: '#fff' }} />) // custom component
-  //   }
-  // }
 
   selectSectors() {
     const { navigate } = this.props.navigation;
     axios.get(`${base_url}${sectorsList}`)
       .then((res) => {
-        console.log(res)
-        console.log(this.props.token)
         navigate('BusinessCategoryScreen', { data: res.data.data, token: this.props.token })
       })
       .catch((err) => {
@@ -68,7 +48,6 @@ class Dashbord extends Component {
     const { navigate } = this.props.navigation;
     axios.get(`${base_url}${events}`, { 'headers': { 'Authorization': this.props.token } })
       .then((res) => {
-        console.log(res)
         navigate('EventsScreen', { data: res.data.data })
       })
       .catch((err) => {
@@ -79,7 +58,6 @@ class Dashbord extends Component {
     const { navigate } = this.props.navigation;
     axios.get(`${base_url}${offers}`, { 'headers': { 'Authorization': this.props.token } })
       .then((res) => {
-        console.log(res)
         navigate('OffersScreen', { data: res.data.data })
       })
       .catch((err) => {
@@ -88,14 +66,10 @@ class Dashbord extends Component {
   }
   selectProfile() {
     const { navigate } = this.props.navigation;
-    console.log(this.props.token)
     AsyncStorage.getItem('token')
       .then((res) => {
-        console.log(res)
         axios.get(`${base_url}${profile}`, { 'headers': { 'Authorization': res } })
           .then((res) => {
-            console.log('user', res)
-
             navigate('ProfileScreen', { profileData: res.data.data })
           })
           .catch((error) => {
@@ -103,16 +77,6 @@ class Dashbord extends Component {
           })
 
       })
-    // axios.get(`${base_url}${profile}`, { 'headers': { 'Authorization': this.props.token } })
-    //   .then((res) => {
-    //     console.log('user', res)
-
-    //     navigate('ProfileScreen', { profileData: res.data.data })
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response)
-    //   })
-
   }
   _logout() {
     const { navigate } = this.props.navigation;
@@ -121,98 +85,108 @@ class Dashbord extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    console.log("profile", this.props.profileInfo)
-    console.log("--tokennnn", this.props.token)
-    // const user = this.props.profileInfo.attributes
     return (
 
-      <ImageBackground source={require('../../../images/Business.jpg')} style={styles.loginimage} >
+      <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
 
-        <ScrollView>
-          <Header
-            leftComponent={<Icon name='home' style={{ marginLeft: 10, color: '#fff' }} />}
-            centerComponent={{ text: 'Home', style: { fontSize: 20, marginLeft: '-50%', fontWeight: 'bold', color: '#fff' } }}
-            rightComponent={< Icon name="log-out" style={{ marginLeft: 10, color: '#fff' }} onPress={() => this._logout()} ></Icon>}
-            backgroundColor='rgb(0,150,136)'
-            outerContainerStyles={{ marginTop: '-2%' }}
-          />
-          <View style={{ alignItems: 'center', minHeight: 350 }}>
-            <Image source={require('../../../images/logotrans.png')} style={styles.logo} />
-            <View style={{ justifyContent: 'flex-end', alignContent: 'flex-end' }}>
-              <View style={{ flexDirection: 'row', marginBottom: '8%' }}>
-                <Button
-                  title=" Events"
-                  icon={{ name: 'event', size: 80 }}
-                  textStyle={{ marginRight: 10 }}
-                  onPress={() => this.selectEvents()}
-                  buttonStyle={{
-                    backgroundColor: 'rgb(0,150,136)',
-                    width: 150,
-                    flexDirection: 'column',
-                    height: 120,
+      <Header
+        leftComponent={<Icon name='home' style={{ marginLeft: 10, fontFamily: 'Gotham Rounded', color: '#fff' }} />}
+        centerComponent={{ text: 'Home', style: { fontSize: 20, marginLeft: '-50%', fontWeight: 'bold', color: '#fff' } }}
+        rightComponent={< Icon name="log-out" style={{ marginLeft: 10, color: '#fff' }} onPress={() => this._logout()} ></Icon>}
+        backgroundColor='rgb(0,150,136)'
+        outerContainerStyles={{ marginTop: '-2%' }}
+      />
+    <ScrollView>
+      <View style={{ alignItems: 'center', minHeight: 350 }}>
+        <Image source={require('../../../images/logotrans.png')} style={styles.logo} />
+        <View style={{ justifyContent: 'flex-end', alignContent: 'flex-end' }}>
+          <View style={{ flexDirection: 'row', marginBottom: '8%' }}>
+            <Button
+              title=" Events"
+              icon={{ name: 'event', size: 80 }}
+              textStyle={{ marginRight: 10 }}
+              onPress={() => this.selectEvents()}
+              buttonStyle={{
+                backgroundColor: 'rgb(0,150,136)',
+                fontFamily: 'Gotham Rounded',
+                width: 150,
+                flexDirection: 'column',
+                height: 120,
 
-                  }}
-                />
-                <Button
-                  icon={{ name: 'person-pin-circle', size: 80 }}
-                  title="sectors"
-                  textStyle={{ marginRight: 10 }}
-                  onPress={() => this.selectSectors()}
-                  buttonStyle={{
-                    backgroundColor: 'rgb(0,150,136)',
-                    height: 120,
-                    width: 150,
-                    flexDirection: 'column'
-                  }}
-                />
-              </View>
-              <View style={{ flexDirection: 'row' }}>
+              }}
+            />
+            <Button
+              icon={{ name: 'person-pin-circle', size: 80 }}
+              title="sectors"
+              textStyle={{ marginRight: 10 }}
+              onPress={() => this.selectSectors()}
+              buttonStyle={{
+                backgroundColor: 'rgb(0,150,136)',
+                fontFamily: 'Gotham Rounded',
+                height: 120,
+                width: 150,
+                flexDirection: 'column'
+              }}
+            />
+          </View>
+          <View style={{ flexDirection: 'row',marginBottom: '8%' }}>
 
-                <Button
-                  icon={{ name: 'local-offer', size: 80 }}
-                  title=" Offers"
-                  textStyle={{ marginRight: 10 }}
-                  onPress={() => this.selectOffers()}
-                  buttonStyle={{
-                    backgroundColor: 'rgb(0,150,136)',
-                    height: 120,
-                    flexDirection: 'column',
-                    width: 150,
-                  }}
-                />
-                <Button
-                  icon={{ name: 'person', size: 80, marginRight: 10 }}
-                  title=" Profile"
-                  onPress={() => this.selectProfile()}
-                  textStyle={{ marginRight: 10 }}
-                  buttonStyle={{
-                    backgroundColor: 'rgb(0,150,136)',
-                    height: 120,
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    // justifyContent:'center',
-                    width: 150
-                  }}
-                />
-              </View>
-
-            </View>
-            {this.props.profileInfo && this.props.profileInfo === "BUSINESS" ?
-              <Button
-                // rounded={true}
-                icon={{ name: 'person' }}
-                title=" CreateOffer"
-                onPress={() => navigate('GenerateOfferScreen')}
-                buttonStyle={{
-                  backgroundColor: 'rgb(0,150,136)',
-                  width: 150
-                }}
-              />
-              : null}
+            <Button
+              icon={{ name: 'local-offer', size: 80 }}
+              title=" Offers"
+              textStyle={{ marginRight: 10 }}
+              onPress={() => this.selectOffers()}
+              buttonStyle={{
+                backgroundColor: 'rgb(0,150,136)',
+                height: 120,
+                fontFamily: 'Gotham Rounded',
+                flexDirection: 'column',
+                width: 150,
+              }}
+            />
+            <Button
+              icon={{ name: 'person', size: 80, marginRight: 10 }}
+              title=" Profile"
+              onPress={() => this.selectProfile()}
+              textStyle={{ marginRight: 10 }}
+              buttonStyle={{
+                backgroundColor: 'rgb(0,150,136)',
+                height: 120,
+                flexDirection: 'column',
+                alignItems: 'center',
+                fontFamily: 'Gotham Rounded',
+                // justifyContent:'center',
+                width: 150,
+              }}
+            />
           </View>
 
-        </ScrollView>
-      </ImageBackground>
+        {this.props.profileInfo && this.props.profileInfo === "BUSINESS" ?
+          <Button
+            // rounded={true}
+            icon={{ name: 'person', size: 80,marginRight: 10 }}
+              textStyle={{ marginRight: 10 }}
+              title=" CreateOffer"
+            onPress={() => navigate('GenerateOfferScreen')}
+            buttonStyle={{
+              backgroundColor: 'rgb(0,150,136)',
+              height: 120,
+              flexDirection: 'column',
+              alignItems: 'center',
+              fontFamily: 'Gotham Rounded',
+              // justifyContent:'center',
+              width: 150,
+              marginBottom:'8%'
+              
+// marginTop:'5%'
+            }}
+          />
+          : null}
+        </View>
+      </View>
+
+    </ScrollView>
+  </ImageBackground>
     )
   }
 }
@@ -220,14 +194,14 @@ const styles = StyleSheet.create({
   loginimage: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     width: null,
     height: null,
     resizeMode: 'stretch',
   },
   logo: {
     marginTop: '10%',
-    marginBottom: '20%',
+    marginBottom: 40,
     width: 200,
     height: 70,
     marginLeft: 'auto',

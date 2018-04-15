@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal,Linking } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal, Linking, ImageBackground } from 'react-native';
 import {
     Button,
     Header,
@@ -21,7 +21,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import style from './style';
 import ProfileModal from '../ProfileModal/profileModal';
 import { base_url, companies, feedBacks } from '../../constants/constant'
-import  Gift  from 'react-native-vector-icons/MaterialCommunityIcons';
+import Gift from 'react-native-vector-icons/MaterialCommunityIcons';
+import StarRating from 'react-native-star-rating';
 
 class CompanyDetails extends React.Component {
     constructor(props) {
@@ -30,7 +31,8 @@ class CompanyDetails extends React.Component {
             socialMedia: [],
             modalVisible: false,
             feedBacks: [],
-            postfeedback: ''
+            postfeedback: '',
+            starCount: null
         }
     }
     static navigationOptions = {
@@ -51,14 +53,12 @@ class CompanyDetails extends React.Component {
     submit() {
         const obj = {
             attributes: {
-                rating: 4,
+                rating: this.state.starCount,
                 feedback: this.state.postfeedback
             }
         }
-
         axios.post(`${base_url}/${companies}/${1}${feedBacks}`, obj, { 'headers': { 'Authorization': this.props.token } })
             .then((res) => {
-                console.log("feedback", res)
                 alert('thank you for your feedback')
             })
             .catch((err) => {
@@ -72,16 +72,12 @@ class CompanyDetails extends React.Component {
         })
 
     }
-    ratingCompleted(rating) {
-        console.log("Rating is: " + rating)
-    }
     closeModal() {
         this.setState({ modalVisible: false });
     }
     openModal() {
         axios.get(`${base_url}/${companies}/${1}${feedBacks}`, { 'headers': { 'Authorization': this.props.token } })
             .then((res) => {
-                console.log("feedback", res)
                 this.setState({
                     feedBacks: res.data.data,
                     modalVisible: true
@@ -91,98 +87,107 @@ class CompanyDetails extends React.Component {
                 console.log(err.response)
             })
     }
+    onStarRatingPress(rating) {
+        this.setState({
+            starCount: rating
+        });
+    }
 
     render() {
-
         const { navigate } = this.props.navigation;
         const address = this.props.navigation.state.params.data.relationships.address.attributes
         const sector = this.props.navigation.state.params.data.relationships.sector.attributes.name
         const socialMedia = this.props.navigation.state.params.data.relationships.socialMediaLink.attributes
         return (
-            <ScrollView style={{ backgroundColor: 'white' }}>
-                <Modal
-                    visible={this.state.modalVisible}
-                    animationType={'slide'}
-                    onRequestClose={() => this.ToggleModal()}
-
-                >
-                    <View style={styles.modalContainer}>
-                        <View style={styles.innerContainer}>
-                            <ProfileModal
-                                closeModel={() => { this.closeModal() }}
-                                feedBacks={this.state.feedBacks}
-                            />
+            <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
+                <ScrollView>
+                    <Modal
+                        visible={this.state.modalVisible}
+                        animationType={'slide'}
+                        onRequestClose={() => this.closeModal()}
+                    >
+                        <View style={styles.modalContainer}>
+                            <View style={styles.innerContainer}>
+                                <ProfileModal
+                                    closeModel={() => { this.closeModal() }}
+                                    feedBacks={this.state.feedBacks}
+                                />
+                            </View>
                         </View>
-                    </View>
-                </Modal>
-                        <Image source={require('../../../images/icon3.png')} style={styles.logo} />
-                <KeyboardAwareScrollView>
-                    <View style={styles.view1}>
+                    </Modal>
+                    <KeyboardAwareScrollView>
+                        <View style={styles.view1}>
+                            <Image source={require('../../../images/icon3.png')} style={styles.logo} />
+                        </View>
                         <View style={styles.view2}>
-                            <Text style={styles.businessname}>{this.props.navigation.state.params.data.attributes.name} ({sector})</Text>
-                            <Text style={styles.businesstype}>{address && address.country}</Text>
-                            <Text style={styles.businesstype}>{address && address.city}</Text>
-                            <Text style={styles.businesstype}>line :{address && address.line}</Text>
-                            <Text style={styles.businesstype}>postalCode :{address && address.postalCode}</Text>
+                            <Text style={styles.businessname}>{this.props.navigation.state.params.data.attributes.name}</Text>
+                            <Text style={styles.businesstype}>{this.props.navigation.state.params.data.subtitle}</Text>
                         </View>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center',alignItems:'center' }}>
-                    <SocialIcon
-                            type='facebook'
-                            onPress={() => Linking.openURL(`${socialMedia && socialMedia.facebook}`)}
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <SocialIcon
+                                type='facebook'
+                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.facebook}`)}
+                            />
+                            <SocialIcon
+                                type='twitter'
+                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.twitter}`)}
+                            />
+                            <SocialIcon
+                                type='linkedin'
+                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.linkedin}`)}
+                            />
+                            <Gift
+                                name='web'
+                                color='#fff'
+                                size={48}
+                                style={{ width: 50, height: '77%', padding: '3.5%', backgroundColor: '#3B92BD', borderRadius: 100, marginLeft: 5 }}
+                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.website}`)}
+                            />
+
+                        </View>
+                        <View style={{ alignItems: 'center', marginTop: 15 }}>
+                            <Text style={styles.businessrating}>Rating This Business</Text>
+                        </View>
+                        <StarRating
+                            disabled={false}
+                            maxStars={5}
+                            emptyStarColor='#fff'
+                            fullStarColor="rgb(0,150,136)"
+                            containerStyle={{ width: '50%', marginLeft: 'auto', marginRight: 'auto' }}
+                            rating={this.state.starCount}
+                            selectedStar={(rating) => this.onStarRatingPress(rating)}
                         />
-                        <SocialIcon
-                            type='twitter'
-                            onPress={() => Linking.openURL(`${socialMedia && socialMedia.twitter}`)}
-                        />
-                        <SocialIcon
-                            type='linkedin'
-                            onPress={() => Linking.openURL(`${socialMedia && socialMedia.linkedin}`)}
-                        />
-                        <Gift
-                            name='web'
-                            color='#fff'
-                            size={48}
-                            style={{backgroundColor:'#000', borderRadius:100, marginLeft:5 }}
-                            onPress={() => Linking.openURL(`${socialMedia && socialMedia.website}`)}
-                        />
-                    </View>
-                    <View style={{ alignItems: 'center', marginTop: 15 }}>
-                        <Text style={styles.businessrating}>Rating This Business</Text>
-                    </View>
-                    <Rating
-                        type='custom'
-                        showRating
-                        // rating={this.state.rating}
-                        fractions={1}
-                        // ratingCount={3}
-                        ratingColor='rgb(0,150,136)'
-                        onFinishRating={() => this.ratingCompleted()}
-                        imageSize={30}
-                        style={{ alignItems: 'center' }}
-                    />
-                    <View style={{ alignItems: 'center', marginTop: 25 }}>
-                        <TouchableOpacity onPress={() => this.openModal()} >
-                            <Text style={styles.businessrating}>FeedBack</Text>
-                        </TouchableOpacity>
-                        <FormInput
-                            value={this.state.postfeedback}
-                            containerStyle={{ width: 250 }}
-                            placeholder='Write your feedback'
-                            underlineColorAndroid='rgb(0,150,136)'
-                            inputStyle={{ color: 'rgb(0,150,136)' }}
-                            onChangeText={(text) => this.setState({ postfeedback: text })}
-                            placeholderTextColor="#D3D3D3"
-                        />
-                        <Button
-                            title="Submit"
-                            buttonStyle={styles.submitButton}
-                            onPress={() => this.submit()}
-                            textStyle={{ fontFamily: 'arial', fontSize: 18 }}
-                        />
-                    </View>
-                </KeyboardAwareScrollView>
-            </ScrollView>
+                        <View style={{ alignItems: 'center', marginTop: 25 }}>
+                            <TouchableOpacity onPress={() => this.openModal()} >
+                                <Text style={styles.businessrating}>FeedBack</Text>
+                            </TouchableOpacity>
+                            <FormInput
+                                value={this.state.postfeedback}
+                                containerStyle={{
+                                    width: 250,
+                                    borderRadius: 5,
+                                    borderWidth: 0.5,
+                                    marginBottom: 0,
+                                    borderColor: '#d6d7da',
+                                    backgroundColor: '#fff'
+                                }}
+                                placeholder='Write your feedback'
+                                underlineColorAndroid='transparent'
+                                inputStyle={{ marginLeft: '3%', fontFamily: 'Gotham Rounded', color: "rgb(0,150,136)" }}
+                                onChangeText={(text) => this.setState({ postfeedback: text })}
+                                placeholderTextColor="#D3D3D3"
+                            />
+                            <Button
+                                title="Submit"
+                                buttonStyle={styles.submitButton}
+                                onPress={() => this.submit()}
+                                textStyle={{ fontFamily: 'arial', fontSize: 18 }}
+                            />
+
+                        </View>
+                    </KeyboardAwareScrollView>
+                </ScrollView>
+            </ImageBackground>
         )
     }
 }
@@ -192,35 +197,48 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
     },
+    loginimage: {
+        flex: 1,
+        justifyContent: 'center',
+        // alignItems: 'center',
+        width: null,
+        height: null,
+        resizeMode: 'stretch',
+    },
     view2: {
         flexDirection: 'column',
         justifyContent: 'center',
+        alignItems: 'center',
     },
     businessname: {
         fontSize: 18,
-        color: "rgb(0,150,136)"
+        color: '#fff'
     },
     businesstype: {
-        color: "rgb(0,150,136)",
+        color: '#fff',
         opacity: 0.5
 
     },
 
     businessrating: {
-        color: "rgb(0,150,136)",
-        fontSize: 20
+        color: '#fff',
+        fontFamily: 'Gotham Rounded',
+        fontSize: 20,
+        marginBottom: '5%'
     },
     submitButton: {
         backgroundColor: 'rgb(0,150,136)',
         marginTop: 15,
+        borderRadius: 5,
         width: 250,
+        marginBottom: '5%'
     },
     logo: {
         width: 100,
         height: 100,
         alignItems: 'center',
-        marginTop: 25,
-       
+        marginTop: '5%',
+        marginBottom: '3%',
         marginRight: 'auto',
         marginLeft: 'auto'
     },
@@ -231,8 +249,6 @@ const styles = StyleSheet.create({
     innerContainer: {
         alignItems: 'center',
     },
-
-
 })
 const mapStateToProps = (state) => {
     return {
@@ -240,4 +256,3 @@ const mapStateToProps = (state) => {
     }
 }
 export default connect(mapStateToProps, null)(CompanyDetails)
-//  CompanyDetails

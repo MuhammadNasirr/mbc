@@ -48,25 +48,20 @@ class ForgotPassword extends Component {
         const { navigate } = this.props.navigation;
         axios.post(`${base_url}${forgotPassword}`, { email: this.state.email })
             .then((res) => {
-                console.log(res)
                 alert('check your email to rest your password')
                 navigate('LogoutMenu')
             })
             .catch((error) => {
                 console.log(error.response)
             })
-
     }
-
     render() {
         const { navigate } = this.props.navigation;
         return (
             <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
                 <KeyboardAwareScrollView>
                     <View style={loginStyles.form}>
-
                         <View style={{ marginTop: 30 }} >
-                            {/* <FormLabel>Email</FormLabel> */}
                             <View style={styles.passwordContainer}>
                                 <FormInput
                                     containerStyle={{
@@ -106,8 +101,6 @@ class ForgotPassword extends Component {
 const styles = StyleSheet.create({
     passwordContainer: {
         flexDirection: 'row',
-        // borderBottomWidth: 1,
-        // borderColor: '#000',
         paddingBottom: 10,
     },
     loginimage: {
@@ -132,18 +125,4 @@ const styles = StyleSheet.create({
         marginRight: 'auto'
     }
 })
-// const mapStateToProps = (state) => {
-//     return {
-//         isLogin: state.AuthReducers.isLoggedIn,
-//         isVerified: state.AuthReducers.verified
-//     }
-// }
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         login: (payload, navigate) => { dispatch(userLogin(payload, navigate)) },
-//         sendemail: () => { dispatch(sendverificationemail()) },
-//         alreadyLogin: (obj) => { dispatch(alreadyLogin(obj)) }
-//     }
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);
 export default ForgotPassword;
