@@ -4,7 +4,8 @@ const initialState = {
     detail: {},
     verified: false,
     token: '',
-    profileInfo: ''
+    profileInfo: '',
+    loading: false
 }
 
 export default function (state = initialState, action) {
@@ -29,7 +30,11 @@ export default function (state = initialState, action) {
             }
         case AuthAction.ALREADYLOGIN:
             return {
-                ...state, isLoggedIn: true, token: action.payload
+                ...state, isLoggedIn: true, token: action.payload,
+            }
+        case AuthAction.CHECKUSER:
+            return {
+                ...state, profileInfo: action.payload
             }
         default:
             return state;

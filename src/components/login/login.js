@@ -9,7 +9,8 @@ import {
     ToastAndroid,
     StyleSheet,
     TextInput,
-    ImageBackground
+    ImageBackground,
+    ActivityIndicator
 } from "react-native";
 import { connect } from 'react-redux'
 import { Header, FormInput, FormLabel, Button, Icon, Input, SocialIcon } from "react-native-elements";
@@ -21,7 +22,8 @@ import axios from 'axios';
 import FBSDK from 'react-native-fbsdk';
 import { LoginManager, LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 // import { GoogleSignin, } from 'react-native-google-signin';
-import { userLogin, alreadyLogin } from '../../store/middleware/authMiddleWare';
+import { userLogin, alreadyLogin, } from '../../store/middleware/authMiddleWare';
+import { AuthAction } from '../../store/actions/authActions'
 import { base_url, Login } from '../../constants/constant';
 const Accounts = [];
 
@@ -35,10 +37,19 @@ class UserLogin extends Component {
         };
     }
     componentDidMount() {
+        var user = ''
         SplashScreen.hide();
         AsyncStorage.getItem('token')
             .then((data) => {
                 if (data !== null) {
+                    AsyncStorage.getItem('role')
+                        .then((role) => {
+                            this.props.userType(role)
+                        })
+                        .catch((err) => {
+                            console.log(err.response)
+                        })
+
                     this.props.alreadyLogin(data)
                 }
             })
@@ -80,9 +91,10 @@ class UserLogin extends Component {
     // }
     render() {
         const { navigate } = this.props.navigation;
-      
+
         return (
             <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
+                <ActivityIndicator size="large" color="#0000ff" animating={false} />
                 <KeyboardAwareScrollView contentContainerStyle={{ display: 'flex', alignItems: 'center' }}>
                     <View style={loginStyles.form}>
                         <Image source={require('../../../images/logotrans.png')} style={styles.logo} />
@@ -227,7 +239,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         login: (payload, navigate) => { dispatch(userLogin(payload, navigate)) },
-        alreadyLogin: (data) => { dispatch(alreadyLogin(data)) }
+        alreadyLogin: (data) => { dispatch(alreadyLogin(data)) },
+        userType: (data) => { dispatch(AuthAction.checkUser(data)) }
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);

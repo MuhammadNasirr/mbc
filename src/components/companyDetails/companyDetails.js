@@ -140,7 +140,7 @@ class CompanyDetails extends React.Component {
                                 name='web'
                                 color='#fff'
                                 size={48}
-                                style={{ width: 50, height: '77%', padding: '3.5%', backgroundColor: '#3B92BD', borderRadius: 100, marginLeft: 5 }}
+                                style={{ width: 50, height: '77%', backgroundColor: '#3B92BD', borderRadius: 100, marginLeft: 5 }}
                                 onPress={() => Linking.openURL(`${socialMedia && socialMedia.website}`)}
                             />
 

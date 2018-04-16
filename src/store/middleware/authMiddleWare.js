@@ -8,6 +8,7 @@ export const userLogin = (obj, navigate) => {
         axios.post(`${base_url}${Login}`, obj)
             .then((res) => {
                 dispatch(AuthAction.userLogin(res))
+                console.log("user response", res)
                 AsyncStorage.setItem('token', res.headers.authorization)
                 ToastAndroid.show('lOGIN SUCCESSFUL !', ToastAndroid.SHORT);
                 AsyncStorage.getItem('token')
@@ -15,6 +16,7 @@ export const userLogin = (obj, navigate) => {
                         dispatch(AuthAction.getToken(res))
                         axios.get(`${base_url}${profile}`, { 'headers': { 'Authorization': res } })
                             .then((res) => {
+                                AsyncStorage.setItem('role', res.data.data.attributes.role)
                                 dispatch(AuthAction.getProfileInfo(res.data.data.attributes.role))
                                 navigate('LoginMenu')
                             })
@@ -54,9 +56,9 @@ export const logout = (navigate) => {
 
     }
 }
-export const alreadyLogin = (data) => {
+export const alreadyLogin = (data, role) => {
     return dispatch => {
-        dispatch(AuthAction.alreadyLogin(data))
+        dispatch(AuthAction.alreadyLogin(data, role))
     }
 }
 

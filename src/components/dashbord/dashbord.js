@@ -85,6 +85,7 @@ class Dashbord extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    console.log("profiledata",this.props.profileInfo)
     return (
 
       <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
