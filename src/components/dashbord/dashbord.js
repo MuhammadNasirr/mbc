@@ -91,11 +91,11 @@ class Dashbord extends Component {
       <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
 
       <Header
-        leftComponent={<Icon name='home' style={{ marginLeft: 10, fontFamily: 'Gotham Rounded', color: '#fff' }} />}
+        leftComponent={<Icon name='home' style={{ fontFamily: 'Gotham Rounded', color: '#fff' }} />}
         centerComponent={{ text: 'Home', style: { fontSize: 20, marginLeft: '-50%', fontWeight: 'bold', color: '#fff' } }}
         rightComponent={< Icon name="log-out" style={{ marginLeft: 10, color: '#fff' }} onPress={() => this._logout()} ></Icon>}
         backgroundColor='rgb(0,150,136)'
-        outerContainerStyles={{ marginTop: '-2%' }}
+        outerContainerStyles={{ marginTop: '-2%',paddingBottom:'4%' }}
       />
     <ScrollView>
       <View style={{ alignItems: 'center', minHeight: 350 }}>

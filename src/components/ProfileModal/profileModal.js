@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, style, Text, StyleSheet, ScrollView,ImageBackground } from 'react-native';
+import { View, style, Text, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import { Rating } from 'react-native-elements';
 import StarRating from 'react-native-star-rating';
@@ -8,7 +8,7 @@ export default class ProfileModal extends React.Component {
     render() {
         console.log(this.props.feedBacks)
         return (
-            <View style={{ width: '100%', height: '100%',minHeight:650 }}>
+            <View style={{ width: '100%', height: '100%' }}>
                 <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
                     <ScrollView >
                         <Card
@@ -29,15 +29,12 @@ export default class ProfileModal extends React.Component {
                                             fractions={1}
                                             rating={d.attributes.rating}
                                             readonly
-                                            // emptyStarColor='#fff'
                                             fullStarColor="rgb(0,150,136)"
                                             containerStyle={{}}
                                             ratingTextColor='#fff'
                                             showReadOnlyText='#fff'
                                             ratingBackgroundColor="transparent"
                                             ratingColor='rgb(0,150,136)'
-                                            // imageSize={30}
-                                            // style={{ paddingVertical: 10}}
                                             readonly={true}
                                         />
                                         <Text>{d.attributes.person}</Text>
@@ -50,10 +47,10 @@ export default class ProfileModal extends React.Component {
                         </Card>
                     </ScrollView>
                     <Button
-                        containerViewStyle={{ marginTop: '5%', alignItems: 'center', justifyContent: 'flex-end' }}
+                        containerViewStyle={{ margin: '3%', alignItems: 'center', justifyContent: 'flex-end' }}
                         onPress={() => this.props.closeModel()}
-                        title="Ok"
-                        buttonStyle={{ width: 200, borderRadius: 5, marginBottom: '5%', backgroundColor: 'rgb(0,150,136)' }}
+                        title="Okay"
+                        buttonStyle={{ width: 200, borderRadius: 5, backgroundColor: 'rgb(0,150,136)' }}
                     />
                 </ImageBackground>
             </View>
@@ -62,6 +59,7 @@ export default class ProfileModal extends React.Component {
 }
 const styles = StyleSheet.create({
     loginimage: {
+        flex:1,
         justifyContent: 'center',
         width: null,
         height: null,

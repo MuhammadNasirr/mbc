@@ -30,6 +30,7 @@ export const loginStyles = {
         flexDirection: 'row',     
         justifyContent: 'space-around',
         alignItems: 'center',
+        marginTop:'2%'
     },
     socialIcons:{
         width:150,

@@ -139,8 +139,8 @@ class CompanyDetails extends React.Component {
                             <Gift
                                 name='web'
                                 color='#fff'
-                                size={48}
-                                style={{ width: 50, height: '77%', backgroundColor: '#3B92BD', borderRadius: 100, marginLeft: 5 }}
+                                size={25}
+                                style={{ width: 50, height: '77%', padding: '3.5%', backgroundColor: '#3B92BD', borderRadius: 100, marginLeft: 5 }}
                                 onPress={() => Linking.openURL(`${socialMedia && socialMedia.website}`)}
                             />
 
@@ -179,6 +179,7 @@ class CompanyDetails extends React.Component {
                             />
                             <Button
                                 title="Submit"
+                                containerViewStyle={{marginBottom:'5%'}}
                                 buttonStyle={styles.submitButton}
                                 onPress={() => this.submit()}
                                 textStyle={{ fontFamily: 'arial', fontSize: 18 }}
@@ -230,8 +231,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgb(0,150,136)',
         marginTop: 15,
         borderRadius: 5,
+        justifyContent:'center',
         width: 250,
-        marginBottom: '5%'
     },
     logo: {
         width: 100,

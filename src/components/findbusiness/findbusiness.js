@@ -74,7 +74,7 @@ class Find extends React.Component {
         return (
             <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
                 <Header
-                    outerContainerStyles={{ marginTop: '-3%' }}
+                    outerContainerStyles={{ marginTop: '-3%',paddingBottom:'4%' }}
                     leftComponent={<Icon name='arrow-back' onPress={() => { this.props.navigation.goBack() }} color='#fff' style={{ marginLeft: 10, color: '#fff' }} />}
                     centerComponent={{ text: 'Find', style: { fontSize: 20, marginLeft: '-30%', fontWeight: 'bold', color: '#fff' } }}
                     rightComponent={
