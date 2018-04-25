@@ -3,6 +3,7 @@ package com.mbc;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.pw.droplet.braintree.BraintreePackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -38,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BraintreePackage(),
             new RNGoogleSigninPackage(),
             // new FBSDKPackage(),
             new FBSDKPackage(mCallbackManager),

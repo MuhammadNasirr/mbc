@@ -33,11 +33,11 @@ class Find extends React.Component {
     }
     static navigationOptions = {
         // header:null,
-        headerTitle: ' Business Categories ',
+        headerTitle: 'Business Categories',
         headerTitleStyle: {
             color: '#fff',
             fontSize: 18,
-            // marginLeft: 'auto',
+            marginLeft: '0%',
             // marginRight: 'auto'
         },
         containerStyle: {
