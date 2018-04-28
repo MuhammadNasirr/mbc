@@ -25,6 +25,7 @@ import { LoginManager, LoginButton, AccessToken, GraphRequest, GraphRequestManag
 import { userLogin, alreadyLogin, } from '../../store/middleware/authMiddleWare';
 import { AuthAction } from '../../store/actions/authActions'
 import { base_url, Login } from '../../constants/constant';
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 const Accounts = [];
 
 class UserLogin extends Component {
@@ -58,6 +59,7 @@ class UserLogin extends Component {
             })
 
     }
+
     static navigationOptions = {
         header: null,
     }
@@ -78,20 +80,144 @@ class UserLogin extends Component {
             // alert('Result Name: ' + result.name);
         }
     }
+
     // _signIn() {
     //     GoogleSignin.signIn()
     //         .then((user) => {
-    //             console.log(user);
-    //             // this.setState({ user: user });
+    //             // console.log(user);
+    //             this.setState({ user: user });
     //         })
     //         .catch((err) => {
     //             console.log('WRONG SIGNIN', err);
     //         })
     //         .done();
+    //     // GoogleSignin.getAccessToken()
+    //     //     .then((token) => {
+    //     //         console.log(token);
+    //     //     })
+    //     //     .catch((err) => {
+    //     //         console.log(err);
+    //     //     })
+    //     //     .done();
     // }
+    _signIn() {
+        GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
+            // play services are available. can now configure library
+        })
+        .catch((err) => {
+          console.log("Play services error", err.code, err.message);
+        })
+        GoogleSignin.configure({
+                    // scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
+                    //   iosClientId: <FROM DEVELOPER CONSOLE> // only for iOS
+                    //   webClientId: <FROM DEVELOPER CONSOLE>, // client ID of type WEB for your server (needed to verify user ID and offline access)
+                    offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+                    hostedDomain: '', // specifies a hosted domain restriction
+                    forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login
+                    accountName: '' // [Android] specifies an account name on the device that should be used
+                })
+        GoogleSignin.signIn()
+            .then((user) => {
+                console.log(user);
+                this.setState({ user: user });
+            })
+            .catch((err) => {
+                console.log('WRONG SIGNIN', err);
+            })
+            // .done();
+        // GoogleSignin.getAccessToken()
+        //     .then((token) => {
+        //         console.log(token);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     })
+            // .done();
+        // GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
+        //     console.log('Play services active');
+        //     GoogleSignin.configure({
+        //         // scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
+        //         //   iosClientId: <FROM DEVELOPER CONSOLE> // only for iOS
+        //         //   webClientId: <FROM DEVELOPER CONSOLE>, // client ID of type WEB for your server (needed to verify user ID and offline access)
+        //         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+        //         hostedDomain: '', // specifies a hosted domain restriction
+        //         forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login
+        //         accountName: '' // [Android] specifies an account name on the device that should be used
+        //     })
+        //         .then(() => {
+        //             GoogleSignin.signIn()
+        //                 .then((user) => {
+        //                     console.log('user==>> : ', user);
+        //                     GoogleSignin.getAccessToken()
+        //                         .then((token) => {
+        //                             console.log(token);
+        //                         })
+        //                         .catch((err) => {
+        //                             console.log(err);
+        //                         })
+        //                         .done();
+        //                       const { navigate } = this.props.navigation
+        //                       let userr = {
+        //                           email: user.email,
+        //                           password: this.state.password,
+        //                           token: user.id,
+        //                           provider: 'google'
+        //                       }
+        //                       this.props.login(userr, navigate)
+        //                     //   const { store: { dispatch } } = this.context;
+        //                     //   if(user.photo === null){
+        //                     //     console.log('login without picture');
+        //                     //     dispatch( loginWithSocial({
+        //                     //       username: user.email,
+        //                     //       token: user.id,
+        //                     //       provider: 'google'
+        //                     //     }));
+        //                     //   }else {
+        //                     //     console.log('login with picture')
+        //                     //     dispatch(loginWithSocial({
+        //                     //       username: user.email,
+        //                     //       token: user.id,
+        //                     //       provider: 'google',
+        //                     //       imageUrl: user.photo
+        //                     //     }));
+        //                     //   }
+        //                 })
+        //                 .catch((err) => {
+        //                     console.log('WRONG SIGNIN', err);
+        //                 })
+        //                 .done();
+        //         });
+        // })
+        //     .catch((err) => {
+        //         console.log('Play services error', err.code, err.message);
+        //     });
+    };
+
+
+
     render() {
         const { navigate } = this.props.navigation;
+        // GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
+        //     // play services are available. can now configure library
+        // })
+        //     .catch((err) => {
+        //         console.log("Play services error", err.code, err.message);
+        //     })
 
+
+        //     .done();
+        //     GoogleSignin.configure({
+        //         scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
+        //       //   iosClientId: <FROM DEVELOPER CONSOLE> // only for iOS
+        //       //   webClientId: <FROM DEVELOPER CONSOLE>, // client ID of type WEB for your server (needed to verify user ID and offline access)
+        //         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+        //         hostedDomain: '', // specifies a hosted domain restriction
+        //         forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login
+        //         accountName: '' // [Android] specifies an account name on the device that should be used
+        //       })
+        //       .then(() => {
+        //         // you can now call currentUserAsync()
+        //       });
         return (
             <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
                 <ActivityIndicator size="large" color="#0000ff" animating={false} />
@@ -187,6 +313,15 @@ class UserLogin extends Component {
                                         }
                                     }
                                     onLogoutFinished={() => alert("logout.")} />
+                            </View>
+                            <View
+                            // style={loginStyles.socialIcons}
+                            >
+                                <GoogleSigninButton
+                                    style={{ width: 48, height: 48 }}
+                                    size={GoogleSigninButton.Size.Icon}
+                                    color={GoogleSigninButton.Color.Dark}
+                                    onPress={this._signIn.bind(this)} />
                             </View>
                             {/* <TouchableOpacity>
                                 <SocialIcon

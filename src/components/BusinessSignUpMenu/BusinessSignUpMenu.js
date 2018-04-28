@@ -115,7 +115,7 @@ export default class BusinessSignUpMenu extends React.Component {
                 </Picker>
                 <Picker
                     mode="dropdown"
-                    placeholder="Select Sectors"
+                    placeholder="Select Business Sectors"
                     value={this.props.sectors}
                     selectedValue={this.props.sectors}
                     onValueChange={(text) => this.props.selectSectors(text)}

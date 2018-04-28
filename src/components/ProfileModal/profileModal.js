@@ -16,7 +16,7 @@ export default class ProfileModal extends React.Component {
                                 display: 'flex',
                                 marginTop: '5%', padding: 10, justifyContent: 'flex-start', marginBottom: 20
                             }}
-                            title="User Feedback and Raiting" >
+                            title="User Feedback and Rating" >
                             {this.props.feedBacks && this.props.feedBacks.map((d, i) => {
                                 console.log(d.attributes)
                                 return (
