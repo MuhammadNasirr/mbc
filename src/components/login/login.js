@@ -80,144 +80,45 @@ class UserLogin extends Component {
             // alert('Result Name: ' + result.name);
         }
     }
-
-    // _signIn() {
-    //     GoogleSignin.signIn()
-    //         .then((user) => {
-    //             // console.log(user);
-    //             this.setState({ user: user });
-    //         })
-    //         .catch((err) => {
-    //             console.log('WRONG SIGNIN', err);
-    //         })
-    //         .done();
-    //     // GoogleSignin.getAccessToken()
-    //     //     .then((token) => {
-    //     //         console.log(token);
-    //     //     })
-    //     //     .catch((err) => {
-    //     //         console.log(err);
-    //     //     })
-    //     //     .done();
-    // }
     _signIn() {
+        const { navigate } = this.props.navigation
         GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
             // play services are available. can now configure library
         })
-        .catch((err) => {
-          console.log("Play services error", err.code, err.message);
-        })
-        GoogleSignin.configure({
-                    // scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
-                    //   iosClientId: <FROM DEVELOPER CONSOLE> // only for iOS
-                    //   webClientId: <FROM DEVELOPER CONSOLE>, // client ID of type WEB for your server (needed to verify user ID and offline access)
-                    offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-                    hostedDomain: '', // specifies a hosted domain restriction
-                    forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login
-                    accountName: '' // [Android] specifies an account name on the device that should be used
-                })
-        GoogleSignin.signIn()
-            .then((user) => {
-                console.log(user);
-                this.setState({ user: user });
-            })
             .catch((err) => {
-                console.log('WRONG SIGNIN', err);
+                console.log("Play services error", err.code, err.message);
             })
-            // .done();
-        // GoogleSignin.getAccessToken()
-        //     .then((token) => {
-        //         console.log(token);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     })
-            // .done();
-        // GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
-        //     console.log('Play services active');
-        //     GoogleSignin.configure({
-        //         // scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
-        //         //   iosClientId: <FROM DEVELOPER CONSOLE> // only for iOS
-        //         //   webClientId: <FROM DEVELOPER CONSOLE>, // client ID of type WEB for your server (needed to verify user ID and offline access)
-        //         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-        //         hostedDomain: '', // specifies a hosted domain restriction
-        //         forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login
-        //         accountName: '' // [Android] specifies an account name on the device that should be used
-        //     })
-        //         .then(() => {
-        //             GoogleSignin.signIn()
-        //                 .then((user) => {
-        //                     console.log('user==>> : ', user);
-        //                     GoogleSignin.getAccessToken()
-        //                         .then((token) => {
-        //                             console.log(token);
-        //                         })
-        //                         .catch((err) => {
-        //                             console.log(err);
-        //                         })
-        //                         .done();
-        //                       const { navigate } = this.props.navigation
-        //                       let userr = {
-        //                           email: user.email,
-        //                           password: this.state.password,
-        //                           token: user.id,
-        //                           provider: 'google'
-        //                       }
-        //                       this.props.login(userr, navigate)
-        //                     //   const { store: { dispatch } } = this.context;
-        //                     //   if(user.photo === null){
-        //                     //     console.log('login without picture');
-        //                     //     dispatch( loginWithSocial({
-        //                     //       username: user.email,
-        //                     //       token: user.id,
-        //                     //       provider: 'google'
-        //                     //     }));
-        //                     //   }else {
-        //                     //     console.log('login with picture')
-        //                     //     dispatch(loginWithSocial({
-        //                     //       username: user.email,
-        //                     //       token: user.id,
-        //                     //       provider: 'google',
-        //                     //       imageUrl: user.photo
-        //                     //     }));
-        //                     //   }
-        //                 })
-        //                 .catch((err) => {
-        //                     console.log('WRONG SIGNIN', err);
-        //                 })
-        //                 .done();
-        //         });
-        // })
-        //     .catch((err) => {
-        //         console.log('Play services error', err.code, err.message);
-        //     });
+        GoogleSignin.configure({
+            // scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
+            //   iosClientId: <FROM DEVELOPER CONSOLE> // only for iOS
+            webClientId: '663564521271-tg70kjob5okoji86lmpr7ctu3fej7uhg.apps.googleusercontent.com'
+            , // client ID of type WEB for your server (needed to verify user ID and offline access)
+            offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+            hostedDomain: '', // specifies a hosted domain restriction
+            forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login
+            accountName: '' // [Android] specifies an account name on the device that should be used
+        })
+            .then(() => {
+                GoogleSignin.signIn()
+                    .then((user) => {
+                        console.log("userdetails==", { user: user });
+                        navigate('SignupScreen', { user: user })
+                        // this.setState({ user: user });
+                    })
+                    .catch((err) => {
+                        console.log('WRONG SIGNIN', err);
+                    })
+            })
+            .catch(() => {
+                console.log("eroro")
+            })
+
     };
 
 
 
     render() {
         const { navigate } = this.props.navigation;
-        // GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
-        //     // play services are available. can now configure library
-        // })
-        //     .catch((err) => {
-        //         console.log("Play services error", err.code, err.message);
-        //     })
-
-
-        //     .done();
-        //     GoogleSignin.configure({
-        //         scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
-        //       //   iosClientId: <FROM DEVELOPER CONSOLE> // only for iOS
-        //       //   webClientId: <FROM DEVELOPER CONSOLE>, // client ID of type WEB for your server (needed to verify user ID and offline access)
-        //         offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-        //         hostedDomain: '', // specifies a hosted domain restriction
-        //         forceConsentPrompt: true, // [Android] if you want to show the authorization prompt at each login
-        //         accountName: '' // [Android] specifies an account name on the device that should be used
-        //       })
-        //       .then(() => {
-        //         // you can now call currentUserAsync()
-        //       });
         return (
             <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
                 <ActivityIndicator size="large" color="#0000ff" animating={false} />
@@ -314,22 +215,31 @@ class UserLogin extends Component {
                                     }
                                     onLogoutFinished={() => alert("logout.")} />
                             </View>
-                            <View
-                            // style={loginStyles.socialIcons}
+                            <TouchableOpacity
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-around',
+                                    marginTop: 10,
+                                    borderColor: 'white',
+                                    borderWidth: 0.5,
+                                    width: 200,
+                                    marginLeft: 'auto',
+                                    marginRight: 'auto',
+                                    backgroundColor: 'white',
+                                    borderRadius: 5
+
+                                }}
+                                onPress={() => this._signIn()}
                             >
                                 <GoogleSigninButton
                                     style={{ width: 48, height: 48 }}
                                     size={GoogleSigninButton.Size.Icon}
                                     color={GoogleSigninButton.Color.Dark}
-                                    onPress={this._signIn.bind(this)} />
-                            </View>
-                            {/* <TouchableOpacity>
-                                <SocialIcon
-                                    type='google'
-                                    iconColor='#fff'
-                                    style={{ backgroundColor: '#2BB673' }}
-                                />
-                            </TouchableOpacity> */}
+                                    onPress={() => this._signIn()} />
+                                <Text style={{ color: 'black' }}>Signup with Google</Text>
+                            </TouchableOpacity>
+
                         </View>
                     </View>
 

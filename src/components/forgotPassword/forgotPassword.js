@@ -49,10 +49,11 @@ class ForgotPassword extends Component {
         axios.post(`${base_url}${forgotPassword}`, { email: this.state.email })
             .then((res) => {
                 alert('check your email to rest your password')
+                ToastAndroid.show('your email to rest your password', ToastAndroid.SHORT)
                 navigate('LogoutMenu')
             })
             .catch((error) => {
-                console.log(error.response)
+                ToastAndroid.show(error.response.data.errors[0].message, ToastAndroid.SHORT)
             })
     }
     render() {
@@ -109,7 +110,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: null,
         height: null,
-        resizeMode: 'stretch',
     },
     inputStyle: {
         flex: 1,

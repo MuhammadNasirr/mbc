@@ -81,6 +81,17 @@ export default class Signup extends React.Component {
     toggleModal() {
         this.setState({ modalVisible: !this.state.modalVisible });
     }
+    componentDidMount() {
+        let email = this.props.navigation.state.params.user.email;
+        let firstName = this.props.navigation.state.params.user.givenName;
+        let lastName = this.props.navigation.state.params.user.familyName;
+
+        this.setState({
+            email,
+            firstName,
+            lastName
+        })
+    }
 
     signup() {
         const { navigate } = this.props.navigation;
@@ -167,6 +178,8 @@ export default class Signup extends React.Component {
     }
     render() {
         const { navigate } = this.props.navigation;
+        console.log("user params", this.props.navigation.state.params && this.props.navigation.state.params.user)
+
         return (
             <ImageBackground source={require('../../../images/login.png')} style={style.loginimage} >
 
@@ -194,7 +207,7 @@ export default class Signup extends React.Component {
                                         value={this.state.selected}
                                         selectedValue={this.state.selected}
                                         onValueChange={this.SelectUserType.bind(this)}
-                                        style={{ color: '#fff', width: 200, marginLeft: 15, fontFamily: 'Gotham Rounded' }}>
+                                        style={{ color: '#fff', width: 200, marginLeft: 15, }}>
                                         <Item label="Select User Type" value="key0" />
                                         <Item label="Individual" value="individual" />
                                         <Item label="Business" value="Business" />
@@ -260,7 +273,7 @@ export default class Signup extends React.Component {
                                             onChangeText={txt => this.setState({ password: txt })}
                                             containerStyle={signupStyles.inputStyle}
                                             placeholderTextColor="#D3D3D3"
-                                            inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)', fontFamily: 'Gotham Rounded', }}
+                                            inputStyle={{ marginLeft: '3%', color: 'rgb(0,150,136)', }}
                                         />
                                     </View>
                                 </View>
@@ -289,7 +302,7 @@ export default class Signup extends React.Component {
                                         </TouchableOpacity>
                                     </View>
                                     <TouchableOpacity onPress={() => navigate("LoginScreen")}>
-                                        <Text style={{ color: '#fff', fontFamily: 'Gotham Rounded', fontWeight: "bold" }}>ALREADY REGISTERED? <Text style={{ textDecoration: 'underline', textDecorationColor: 'rgb(0,150,136)', color: 'rgb(0,150,136)' }}>LOGIN</Text></Text>
+                                        <Text style={{ color: '#fff', fontFamily: 'Gotham Rounded', fontWeight: "bold" }}>ALREADY REGISTERED? <Text style={{ color: 'rgb(0,150,136)' }}>LOGIN</Text></Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -325,6 +338,5 @@ const style = StyleSheet.create({
         alignItems: 'center',
         width: null,
         height: null,
-        resizeMode: 'stretch',
     }
 })

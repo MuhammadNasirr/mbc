@@ -21,7 +21,6 @@ export const signupStyles = {
         borderColor: '#d6d7da',
         backgroundColor: '#fff',
         marginTop: '3%',
-        fontFamily: 'Gotham Rounded',
     },
 
     privacy: {

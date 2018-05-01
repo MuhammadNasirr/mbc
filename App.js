@@ -50,3 +50,28 @@ const mapStateToProps = (state) => {
   }
 }
 export default connect(mapStateToProps, null)(App)
+
+
+
+
+{/* <TouchableOpacity
+style={{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginTop: 10,
+     borderColor: 'white',
+    borderWidth: 0.5,
+    width: 200,
+    marginLeft: 'auto',
+    marginRight: 'auto'
+
+}}
+>
+<GoogleSigninButton
+    style={{ width: 48, height: 48 }}
+    size={GoogleSigninButton.Size.Icon}
+    color={GoogleSigninButton.Color.Dark}
+    onPress={() => this._signIn()} />
+<Text style={{ color: 'white' }}>Sign in with Google</Text>
+</TouchableOpacity> */}
