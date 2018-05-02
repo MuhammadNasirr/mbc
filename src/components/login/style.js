@@ -37,9 +37,11 @@ export const loginStyles = {
         flexDirection: 'row',     
         justifyContent: 'space-around',
         alignItems: 'center',
+        // textAlign:'center',
         marginTop:'5%',
         marginLeft:'auto',
-        marginRight:'auto'
+        marginRight:'auto',
+        padding:5
         
     }
 }

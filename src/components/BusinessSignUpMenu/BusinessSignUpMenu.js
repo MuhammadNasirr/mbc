@@ -45,7 +45,7 @@ export default class BusinessSignUpMenu extends React.Component {
                     iosIcon={<Icon name="ios-arrow-down-outline" />}
                     selectedValue={props.selected}
                     onValueChange={(text) => props.SelectUserType(text)}
-                    style={{ color: '#fff', width: 200, marginLeft: 15 }}>
+                    style={{ color: '#fff', width: 230, marginLeft: 15 }}>
                     <Item label="Select User Type" value="key0" color='rgb(0,150,136)' />
                     <Item label="Individual" value="individual" />
                     <Item label="Business" value="Business" />
@@ -102,7 +102,7 @@ export default class BusinessSignUpMenu extends React.Component {
                     value={this.props.country}
                     selectedValue={this.props.country}
                     onValueChange={(text) => this.props.SelectCountry(text)}
-                    style={{ color: '#fff', width: 200, marginLeft: 15 }}>
+                    style={{ color: '#fff', width: 230, marginLeft: 15 }}>
                     <Item label="Select Country" value="key0" color='rgb(0,150,136)' />
                     <Item label="United State" value="United State" />
                     <Item label="Australia" value="Australia" />
@@ -119,7 +119,8 @@ export default class BusinessSignUpMenu extends React.Component {
                     value={this.props.sectors}
                     selectedValue={this.props.sectors}
                     onValueChange={(text) => this.props.selectSectors(text)}
-                    style={{ color: '#fff', width: 200, marginLeft: 15 }}>
+                    style={{ color: '#fff', width: 230, marginLeft: 15 }}>
+                     <Item key={0} label="Select Business Sector" value={0} style={{fontSize:10}} color='rgb(0,150,136)' />
                     {this.state.sectors && this.state.sectors.map((d, i) => {
                         return (
                             <Item key={i} label={d.attributes.name} value={d.id} color='rgb(0,150,136)' />

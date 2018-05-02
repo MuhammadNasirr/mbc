@@ -33,7 +33,7 @@ export default class PrivacyCard extends React.Component {
                     <Button
                         containerViewStyle={{ marginBottom: '5%', alignItems: 'center', justifyContent: 'flex-end' }}
                         onPress={() => this.props.closeModel()}
-                        title="ok"
+                        title="Ok"
                         buttonStyle={{ width: 200, borderRadius: 5, backgroundColor: 'rgb(0,150,136)' }}
                     />
                 </ImageBackground>

@@ -81,7 +81,7 @@ export default class Signup extends React.Component {
     toggleModal() {
         this.setState({ modalVisible: !this.state.modalVisible });
     }
-    componentDidMount() {
+    componentWillReceiveProps() {
         let email = this.props.navigation.state.params.user.email;
         let firstName = this.props.navigation.state.params.user.givenName;
         let lastName = this.props.navigation.state.params.user.familyName;
@@ -178,7 +178,7 @@ export default class Signup extends React.Component {
     }
     render() {
         const { navigate } = this.props.navigation;
-        console.log("user params", this.props.navigation.state.params && this.props.navigation.state.params.user)
+        // console.log("user params", this.props.navigation.state.params && this.props.navigation.state.params.user)
 
         return (
             <ImageBackground source={require('../../../images/login.png')} style={style.loginimage} >
@@ -207,7 +207,7 @@ export default class Signup extends React.Component {
                                         value={this.state.selected}
                                         selectedValue={this.state.selected}
                                         onValueChange={this.SelectUserType.bind(this)}
-                                        style={{ color: '#fff', width: 200, marginLeft: 15, }}>
+                                        style={{ color: '#fff', width: 230, marginLeft: 15, }}>
                                         <Item label="Select User Type" value="key0" />
                                         <Item label="Individual" value="individual" />
                                         <Item label="Business" value="Business" />

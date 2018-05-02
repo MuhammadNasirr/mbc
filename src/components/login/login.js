@@ -213,7 +213,8 @@ class UserLogin extends Component {
                                             }
                                         }
                                     }
-                                    onLogoutFinished={() => alert("logout.")} />
+                                    onLogoutFinished={() => alert("logout.")}
+                                />
                             </View>
                             <TouchableOpacity
                                 style={{
@@ -223,21 +224,23 @@ class UserLogin extends Component {
                                     marginTop: 10,
                                     borderColor: 'white',
                                     borderWidth: 0.5,
-                                    width: 200,
+                                    width: 190,
+                                    height: 30,
                                     marginLeft: 'auto',
                                     marginRight: 'auto',
                                     backgroundColor: 'white',
-                                    borderRadius: 5
+                                    borderRadius: 3,
+                                    padding:12
 
                                 }}
                                 onPress={() => this._signIn()}
                             >
                                 <GoogleSigninButton
-                                    style={{ width: 48, height: 48 }}
+                                    style={{ width: 30, height: 25 }}
                                     size={GoogleSigninButton.Size.Icon}
                                     color={GoogleSigninButton.Color.Dark}
                                     onPress={() => this._signIn()} />
-                                <Text style={{ color: 'black' }}>Signup with Google</Text>
+                                <Text style={{ fontSize:13, color: 'black' }}>Continue with Google</Text>
                             </TouchableOpacity>
 
                         </View>
