@@ -8,7 +8,7 @@ export class AuthAction {
     static SIGNUPSUCCESS = "SIGNUP";
     static SIGNUPFAIL = "SIGNUP";
 
-    static LOGOUT ="LOGOUT"
+    static LOGOUT = "LOGOUT"
     static LOGOUTSUCCESS = "LOGOUTSUCCESS";
     static LOGOUTFAIL = "LOGOUTFAIL";
 
@@ -16,12 +16,13 @@ export class AuthAction {
     static GETTOKEN = "GETTOKEN";
     static GETPROFILEINFO = "GETPROFILEINFO";
     static CHECKUSER = "CHECKUSER";
+    static GETUSERINFO = 'GETUSERINFO';
 
 
 
 
 
-    
+
     static userLogin = (payload) => ({
         type: AuthAction.LOGIN,
         payload
@@ -76,6 +77,14 @@ export class AuthAction {
         return (
             {
                 type: AuthAction.GETPROFILEINFO,
+                payload
+            }
+        )
+    }
+    static getuserdata = (payload) => {
+        return (
+            {
+                type: AuthAction.GETUSERINFO,
                 payload
             }
         )

@@ -23,13 +23,14 @@ import {
 import { Picker } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import { signupStyles } from "./style";
 import { PrivacyPolicy, BusinessSignUpMenu } from '../../components';
 import { base_url, CustomerSignup } from '../../constants/constant';
 
 const Item = Picker.Item;
-export default class Signup extends React.Component {
+class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -49,6 +50,40 @@ export default class Signup extends React.Component {
             city: '',
             zipPostalCode: '',
             country: ''
+        }
+    }
+    componentWillMount() {
+        if (this.props.navigation.state.params === undefined) {
+            console.log("")
+        }
+        else {
+
+            let firstName = this.props.navigation.state.params.fbUser;
+
+            this.setState({
+                firstName,
+            })
+        }
+    }
+    componentDidMount() {
+
+        this.props.username && this.setState({
+            firstName: this.props.username
+        })
+
+        if (this.props.navigation.state.params === undefined) {
+            console.log("")
+        }
+        else {
+
+            let email = this.props.navigation.state.params.user.email;
+            let firstName = this.props.navigation.state.params.user.givenName;
+            let lastName = this.props.navigation.state.params.user.familyName;
+            this.setState({
+                email,
+                firstName,
+                lastName
+            })
         }
     }
     static navigationOptions = {
@@ -81,26 +116,18 @@ export default class Signup extends React.Component {
     toggleModal() {
         this.setState({ modalVisible: !this.state.modalVisible });
     }
-    componentWillReceiveProps() {
-        let email = this.props.navigation.state.params.user.email;
-        let firstName = this.props.navigation.state.params.user.givenName;
-        let lastName = this.props.navigation.state.params.user.familyName;
 
-        this.setState({
-            email,
-            firstName,
-            lastName
-        })
-    }
 
     signup() {
         const { navigate } = this.props.navigation;
         const obj = {
-            userType: "CUSTOMER",
-            email: this.state.email,
-            password: this.state.password,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName
+            attributes: {
+                userType: "CUSTOMER",
+                email: this.state.email,
+                password: this.state.password,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName
+            }
         }
 
         const alllstate = {
@@ -137,14 +164,8 @@ export default class Signup extends React.Component {
 
         else if (this.state.selected === "individual") {
             this.state.checked ?
-                axios.post(`${base_url}${CustomerSignup}`, { attributes: obj })
-                    .then((res) => {
-                        const { navigate } = this.props.navigation;
-                        navigate('SelectPaymentScreen', { data: this.state.selected })
-                    })
-                    .catch((error) => {
-                        ToastAndroid.show(error.response.data.errors[0].message, ToastAndroid.SHORT);
-                    }) : ToastAndroid.show("You have to Agree the Privacy policy of MBC", ToastAndroid.SHORT);
+                navigate('SelectPaymentScreen', { data: this.state.selected, obj: obj })
+                : ToastAndroid.show("You have to Agree the Privacy policy of MBC", ToastAndroid.SHORT);
         }
 
         else {
@@ -178,7 +199,7 @@ export default class Signup extends React.Component {
     }
     render() {
         const { navigate } = this.props.navigation;
-        // console.log("user params", this.props.navigation.state.params && this.props.navigation.state.params.user)
+        console.log("====user", this.props.username)
 
         return (
             <ImageBackground source={require('../../../images/login.png')} style={style.loginimage} >
@@ -340,3 +361,10 @@ const style = StyleSheet.create({
         height: null,
     }
 })
+
+const mapStatetoProps = (state) => {
+    return {
+        username: state.AuthReducers.userInfo
+    }
+}
+export default connect(mapStatetoProps, null)(Signup)

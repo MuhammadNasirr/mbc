@@ -69,6 +69,7 @@ class Find extends React.Component {
 
     }
     render() {
+        console.log(this.props.navigation.state.params.data)
         const { navigate } = this.props.navigation;
         const data = this.state.filter ? this.state.companies : this.props.navigation.state.params.data
         return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal, Linking, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal, Linking, ImageBackground,ToastAndroid } from 'react-native';
 import {
     Button,
     Header,
@@ -51,13 +51,14 @@ class CompanyDetails extends React.Component {
 
     }
     submit() {
+        const id =this.props.navigation.state.params.data.id
         const obj = {
             attributes: {
                 rating: this.state.starCount,
                 feedback: this.state.postfeedback
             }
         }
-        axios.post(`${base_url}/${companies}/${1}${feedBacks}`, obj, { 'headers': { 'Authorization': this.props.token } })
+        axios.post(`${base_url}/${companies}/${id}${feedBacks}`, obj, { 'headers': { 'Authorization': this.props.token } })
             .then((res) => {
                 alert('thank you for your feedback')
             })
@@ -76,7 +77,8 @@ class CompanyDetails extends React.Component {
         this.setState({ modalVisible: false });
     }
     openModal() {
-        axios.get(`${base_url}/${companies}/${1}${feedBacks}`, { 'headers': { 'Authorization': this.props.token } })
+        const id =this.props.navigation.state.params.data.id
+        axios.get(`${base_url}/${companies}/${id}${feedBacks}`, { 'headers': { 'Authorization': this.props.token } })
             .then((res) => {
                 this.setState({
                     feedBacks: res.data.data,
@@ -98,6 +100,7 @@ class CompanyDetails extends React.Component {
         const address = this.props.navigation.state.params.data.relationships.address.attributes
         const sector = this.props.navigation.state.params.data.relationships.sector.attributes.name
         const socialMedia = this.props.navigation.state.params.data.relationships.socialMediaLink.attributes
+        console.log("media", this.props.navigation.state.params.data)
         return (
             <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
                 <ScrollView>
@@ -126,22 +129,22 @@ class CompanyDetails extends React.Component {
                         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <SocialIcon
                                 type='facebook'
-                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.facebook}`)}
+                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.facebook == '' ?  ToastAndroid.show("facebook url not available for this company", ToastAndroid.SHORT) : socialMedia.facebook}`)}
                             />
                             <SocialIcon
                                 type='twitter'
-                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.twitter}`)}
+                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.twitter == '' ? ToastAndroid.show("Twitter url not available for this company", ToastAndroid.SHORT) : socialMedia.twitter}`)}
                             />
                             <SocialIcon
                                 type='linkedin'
-                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.linkedin}`)}
+                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.linkedin == '' ? ToastAndroid.show("Linkedin url not available for this company", ToastAndroid.SHORT) : socialMedia.linkedin}`)}
                             />
                             <Gift
                                 name='web'
                                 color='#fff'
                                 size={25}
                                 style={{ width: 50, height: '77%', padding: '3.5%', backgroundColor: '#3B92BD', borderRadius: 100, marginLeft: 5 }}
-                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.website}`)}
+                                onPress={() => Linking.openURL(`${socialMedia && socialMedia.website == '' ? ToastAndroid.show("Web url not available for this company", ToastAndroid.SHORT) : socialMedia.website}`)}
                             />
 
                         </View>
@@ -179,7 +182,7 @@ class CompanyDetails extends React.Component {
                             />
                             <Button
                                 title="Submit"
-                                containerViewStyle={{marginBottom:'5%'}}
+                                containerViewStyle={{ marginBottom: '5%' }}
                                 buttonStyle={styles.submitButton}
                                 onPress={() => this.submit()}
                                 textStyle={{ fontFamily: 'arial', fontSize: 18 }}
@@ -231,7 +234,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgb(0,150,136)',
         marginTop: 15,
         borderRadius: 5,
-        justifyContent:'center',
+        justifyContent: 'center',
         width: 250,
     },
     logo: {

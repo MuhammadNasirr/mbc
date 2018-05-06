@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "183789707958",
+    "firebase_url": "https://react-blood-bank-ba06d.firebaseio.com",
+    "project_id": "react-blood-bank-ba06d",
+    "storage_bucket": "react-blood-bank-ba06d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183789707958:android:f02bc41179e06500",
+        "android_client_info": {
+          "package_name": "com.mbc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183789707958-4k0fuk1c4h2f9t6ckbi9prrntt670g46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOMJMSMq9b7ehUlYlS69C0Mcfs7zqG55k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

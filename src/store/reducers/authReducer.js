@@ -5,7 +5,8 @@ const initialState = {
     verified: false,
     token: '',
     profileInfo: '',
-    loading: false
+    loading: false,
+    userInfo: ''
 }
 
 export default function (state = initialState, action) {
@@ -35,6 +36,10 @@ export default function (state = initialState, action) {
         case AuthAction.CHECKUSER:
             return {
                 ...state, profileInfo: action.payload
+            }
+        case AuthAction.GETUSERINFO:
+            return {
+                ...state, userInfo: action.payload
             }
         default:
             return state;

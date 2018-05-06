@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MBC</string>
+    <!-- <string name="facebook_app_id">950882155074120</string>
+    <string name="fb_login_protocol_scheme">fb950882155074120</string> -->
+    <string name="facebook_app_id">246300299274600</string>
+    <string name="fb_login_protocol_scheme">fb246300299274600</string>
+    
+</resources>

@@ -73,10 +73,13 @@ class UserLogin extends Component {
     }
 
     _responseInfoCallback = (error, result) => {
+        const { navigate } = this.props.navigation;
         if (error) {
             alert('Error fetching data: ' + error.toString());
         } else {
-            console.log('Result Name: ', result);
+            console.log('Result Name: ', result.name);
+            this.props.getdata(result.name)
+            navigate('SignupScreen')
             // alert('Result Name: ' + result.name);
         }
     }
@@ -114,9 +117,29 @@ class UserLogin extends Component {
             })
 
     };
+    fblogin() {
+        var res = this._responseInfoCallback
+        LoginManager.logInWithReadPermissions(['public_profile']).then(
+            function (result) {
+                console.log("resulr===", result)
+                if (result.isCancelled) {
+                    alert('Login cancelled');
+                } else {
+                    const infoRequest = new GraphRequest(
+                        '/me',
+                        null,
+                        res
+                    );
+                    // Start the graph request.
+                    new GraphRequestManager().addRequest(infoRequest).start();
+                }
+            },
+            function (error) {
+                alert('Login fail with error: ' + error);
+            }
+        );
 
-
-
+    }
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -189,31 +212,13 @@ class UserLogin extends Component {
                                 </TouchableOpacity>
                             </View>
                             <View style={loginStyles.socialIcons}>
-                                <LoginButton
-                                    // publishPermissions={["publish_actions"]}
-                                    readPermissions={["email", "user_friends", "public_profile"]}
-                                    onLoginFinished={
-                                        (error, result) => {
-                                            if (error) {
-                                                alert("login has error: " + result.error);
-                                            } else if (result.isCancelled) {
-                                                alert("login is cancelled.");
-                                            } else {
-                                                AccessToken.getCurrentAccessToken().then(
-                                                    (data) => {
-                                                        const infoRequest = new GraphRequest(
-                                                            '/me?fields=name,picture',
-                                                            null,
-                                                            this._responseInfoCallback
-                                                        );
-                                                        // Start the graph request.
-                                                        new GraphRequestManager().addRequest(infoRequest).start();
-                                                    }
-                                                )
-                                            }
-                                        }
-                                    }
-                                    onLogoutFinished={() => alert("logout.")}
+                                <SocialIcon
+                                    title='Continue with Facebook'
+                                    button
+                                    type='facebook'
+                                    fontStyle={{ fontSize: 12 }}
+                                    style={{ width: 190, height: 30, borderRadius: 5 }}
+                                    onPress={() => this.fblogin()}
                                 />
                             </View>
                             <TouchableOpacity
@@ -230,7 +235,7 @@ class UserLogin extends Component {
                                     marginRight: 'auto',
                                     backgroundColor: 'white',
                                     borderRadius: 3,
-                                    padding:12
+                                    padding: 12
 
                                 }}
                                 onPress={() => this._signIn()}
@@ -240,7 +245,7 @@ class UserLogin extends Component {
                                     size={GoogleSigninButton.Size.Icon}
                                     color={GoogleSigninButton.Color.Dark}
                                     onPress={() => this._signIn()} />
-                                <Text style={{ fontSize:13, color: 'black' }}>Continue with Google</Text>
+                                <Text style={{ fontSize: 13, color: 'black' }}>Continue with Google</Text>
                             </TouchableOpacity>
 
                         </View>
@@ -288,7 +293,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         login: (payload, navigate) => { dispatch(userLogin(payload, navigate)) },
         alreadyLogin: (data) => { dispatch(alreadyLogin(data)) },
-        userType: (data) => { dispatch(AuthAction.checkUser(data)) }
+        userType: (data) => { dispatch(AuthAction.checkUser(data)) },
+        getdata: (data) => { dispatch(AuthAction.getuserdata(data)) }
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);

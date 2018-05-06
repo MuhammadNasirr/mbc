@@ -36,6 +36,7 @@ export default class Find extends React.Component {
     }
     render() {
         const list = this.props.navigation.state.params.data
+        console.log("===list",list)
         const { navigate } = this.props.navigation;
         return (
             <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >

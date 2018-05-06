@@ -21,10 +21,10 @@ export default class CompanyLinks extends React.Component {
         super(props);
         this.state = {
             socialMedia: [],
-            facebookUrl: 'https://',
-            LinkedinUrl: 'https://',
-            TwitterUrl: 'https://',
-            WebsiteUrl: 'https://'
+            facebookUrl: '',
+            LinkedinUrl: '',
+            TwitterUrl: '',
+            WebsiteUrl: ''
         }
     }
     static navigationOptions = {
@@ -78,14 +78,16 @@ export default class CompanyLinks extends React.Component {
                 }
             }
         }
-        axios.post(`${base_url}${CustomerSignup}`, data)
-            .then((res) => {
-                navigate('SelectPaymentScreen', { data: this.props.navigation.state.params.data })
-            })
-            .catch((error) => {
-                console.log(error.response.data.errors[0].message)
-                ToastAndroid.show(error.response.data.errors[0].message, ToastAndroid.SHORT);
-            })
+        navigate('SelectPaymentScreen', { obj: data })
+        // axios.post(`${base_url}${CustomerSignup}`, data)
+        //     .then((res) => {
+        //         alert('success')
+        //         navigate('SelectPaymentScreen', { data: this.props.navigation.state.params.data, obj: data })
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.response.data.errors[0].message)
+        //         ToastAndroid.show(error.response.data.errors[0].message, ToastAndroid.SHORT);
+        //     })
 
     }
     render() {

@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "663564521271",
+    "firebase_url": "https://final-year-project-648bc.firebaseio.com",
+    "project_id": "final-year-project-648bc",
+    "storage_bucket": "final-year-project-648bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663564521271:android:f02bc41179e06500",
+        "android_client_info": {
+          "package_name": "com.mbc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663564521271-bqfaatomo604t3bgkmdnam4k0s5anutb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW5skfzz6iaMUGU7rVo2PBF11fw4tmcBY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663564521271:android:af36d4d29a83e04c",
+        "android_client_info": {
+          "package_name": "com.testing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663564521271-bqfaatomo604t3bgkmdnam4k0s5anutb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW5skfzz6iaMUGU7rVo2PBF11fw4tmcBY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

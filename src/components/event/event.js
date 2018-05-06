@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image, Modal, ImageBackground,Linking } from 'react-native';
 import {
     Button,
     Header,
@@ -38,6 +38,7 @@ export default class Events extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         const list = this.props.navigation.state.params.data
+        console.log("list==",list)
         return (
 
             <ImageBackground source={require('../../../images/login.png')} style={styles.loginimage} >
@@ -47,7 +48,7 @@ export default class Events extends React.Component {
                         <List containerStyle={{ marginBottom: 20, backgroundColor: 'transparent', marginTop: 0 }}>
                             {
                                 list && list.map((l, i) => (
-                                    <TouchableOpacity key={i} >
+                                    <TouchableOpacity key={i} onPress={() =>Linking.openURL(`${l && l.attributes.eventLink == '' ? null : l.attributes.eventLink}`)} >
                                         <ListItem
                                             titleNumberOfLines={2}
                                             // chevron

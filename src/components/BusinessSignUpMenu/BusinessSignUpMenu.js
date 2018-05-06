@@ -17,7 +17,7 @@ import styles from './style'
 import { signupStyles } from "./style";
 // import PrivacyPolicy from '../PrivacyContent/PrivacyContent';
 import { base_url, sectorsList } from '../../constants/constant'
-// import { BusinessCategory } from '..';
+import conuntries from './countrylist'
 const Item = Picker.Item;
 
 export default class BusinessSignUpMenu extends React.Component {
@@ -104,6 +104,12 @@ export default class BusinessSignUpMenu extends React.Component {
                     onValueChange={(text) => this.props.SelectCountry(text)}
                     style={{ color: '#fff', width: 230, marginLeft: 15 }}>
                     <Item label="Select Country" value="key0" color='rgb(0,150,136)' />
+                    {conuntries && conuntries.map((country, i) => {
+                        return (
+                            <Item label={country.name} value={country.name} color='rgb(0,150,136)' />
+                        )
+                    })}
+                    {/* <Item label="Select Country" value="key0" color='rgb(0,150,136)' />
                     <Item label="United State" value="United State" />
                     <Item label="Australia" value="Australia" />
                     <Item label="England" value="England" />
@@ -111,7 +117,7 @@ export default class BusinessSignUpMenu extends React.Component {
                     <Item label="Bahrain" value="Bahrain" />
                     <Item label="Canada" value="Canada" />
                     <Item label="Egypt" value="Egypt" />
-                    <Item label="Georgia" value="Georgia" />
+                    <Item label="Georgia" value="Georgia" /> */}
                 </Picker>
                 <Picker
                     mode="dropdown"
@@ -120,7 +126,7 @@ export default class BusinessSignUpMenu extends React.Component {
                     selectedValue={this.props.sectors}
                     onValueChange={(text) => this.props.selectSectors(text)}
                     style={{ color: '#fff', width: 230, marginLeft: 15 }}>
-                     <Item key={0} label="Select Business Sector" value={0} style={{fontSize:10}} color='rgb(0,150,136)' />
+                    <Item key={0} label="Select Business Sector" value={0} style={{ fontSize: 10 }} color='rgb(0,150,136)' />
                     {this.state.sectors && this.state.sectors.map((d, i) => {
                         return (
                             <Item key={i} label={d.attributes.name} value={d.id} color='rgb(0,150,136)' />
